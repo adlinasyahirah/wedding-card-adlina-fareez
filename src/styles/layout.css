@@ -1,0 +1,23 @@
+#app {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.site-shell {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow-x: clip;
+}
+
+.section-container {
+  width: min(100% - 2rem, var(--content-width));
+  margin-inline: auto;
+}
+
+/* Add larger-screen enhancements only after the mobile layout is complete. */
+@media (min-width: 48rem) {
+  .section-container {
+    width: min(100% - 4rem, var(--content-width));
+  }
+}
