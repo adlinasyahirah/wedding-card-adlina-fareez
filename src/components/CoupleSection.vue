@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CoupleProfile from './CoupleProfile.vue'
 import { wedding } from '../data/wedding'
 </script>
 
@@ -7,21 +6,42 @@ import { wedding } from '../data/wedding'
   <section v-reveal class="couple-section" aria-labelledby="couple-title">
     <div class="couple-section__container">
       <header class="couple-section__header">
-        <p class="couple-section__eyebrow">Mempelai</p>
-        <h2 id="couple-title" class="couple-section__title">Raja Sehari</h2>
-        <p class="couple-section__intro">
-          Dua hati disatukan dalam sebuah ikatan yang penuh kasih dan keberkatan.
-        </p>
+        <p class="couple-section__greeting">Assalamualaikum &amp; Salam Sejahtera <br> Dengan kesyukuran dan ke hadrat Ilahi, kami</p>
       </header>
 
-      <div class="couple-section__profiles">
-        <CoupleProfile :person="wedding.bride" role="Pengantin Perempuan" />
-
-        <div class="couple-section__connector" aria-hidden="true">
-          <span>&amp;</span>
+      <div class="couple-section__invitation">
+        <div class="couple-section__hosts">
+          <p>{{ wedding.parents.bride.father }}</p>
+          <p>&</p>
+          <p>{{ wedding.parents.bride.mother }}</p>
         </div>
 
-        <CoupleProfile :person="wedding.groom" role="Pengantin Lelaki" />
+        <p class="couple-section__copy">
+          dengan penuh kesyukuran, kami menjemput <br>
+          Dato' / Datin / Tuan / Puan / Encik / Cik dan seisi keluarga <br>
+          ke majlis puteri kami yang dikasihi
+        </p>
+
+        <div class="couple-section__couple">
+          <h2 id="couple-title">{{ wedding.bride.fullName }}</h2>
+          <p>dengan pilihan hatinya</p>
+          <h3>{{ wedding.groom.fullName }}</h3>
+        </div>
+
+        <div class="couple-section__event">
+          <p class="couple-section__on">pada</p>
+          <p class="couple-section__date">
+            <span>Sabtu</span>
+            <span class="couple-section__date-separator" aria-hidden="true">|</span>
+            <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
+          </p>
+          <p class="couple-section__hijri">{{ wedding.hijriDate }}</p>
+        </div>
+
+        <address class="couple-section__venue">
+          <strong>{{ wedding.venue.name }}</strong>
+          <span>{{ wedding.venue.address }}</span>
+        </address>
       </div>
     </div>
   </section>
@@ -34,64 +54,127 @@ import { wedding } from '../data/wedding'
 }
 
 .couple-section__container {
-  width: min(100%, 62rem);
+  width: min(100%, 52rem);
   margin-inline: auto;
 }
 
 .couple-section__header {
-  max-width: 34rem;
-  margin: 0 auto var(--space-12);
+  margin: 0 auto var(--space-6);
   text-align: center;
 }
 
-.couple-section__eyebrow {
-  margin: 0 0 var(--space-3);
-  color: var(--color-gold);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.3em;
+.couple-section__greeting {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.couple-section__invitation {
+  display: grid;
+  gap: var(--space-8);
+  text-align: center;
+}
+
+.couple-section__hosts {
+  display: grid;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+  padding-top: 15px;
+  font-size: 1.13rem;
+  font-weight: 800;
+  letter-spacing: 0.em;
   text-transform: uppercase;
 }
 
-.couple-section__title {
+.couple-section__hosts p,
+.couple-section__copy,
+.couple-section__couple p,
+.couple-section__event p {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 11vw, 4rem);
-  font-weight: 400;
-  line-height: 1.1;
 }
 
-.couple-section__intro {
-  margin: var(--space-4) auto 0;
+.couple-section__copy {
+  display: grid;
+  gap: var(--space-2);
   color: var(--color-text-muted);
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   line-height: 1.8;
 }
 
-.couple-section__profiles {
-  display: grid;
-  gap: var(--space-8);
-  align-items: center;
+.couple-section__copy strong {
+  color: var(--color-text);
+  font-weight: 600;
 }
 
-.couple-section__connector {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.couple-section__couple {
+  display: grid;
   gap: var(--space-4);
-  color: var(--color-gold);
+}
+
+.couple-section__couple h2,
+.couple-section__couple h3 {
+  margin: 0;
+  color: var(--color-primary);
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.couple-section__couple p,
+.couple-section__on,
+.couple-section__hijri {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
   font-style: italic;
 }
 
-.couple-section__connector::before,
-.couple-section__connector::after {
-  width: 3rem;
-  height: 1px;
-  background: currentColor;
-  content: '';
-  opacity: 0.45;
+.couple-section__event {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.couple-section__date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 5vw, 1.5rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.couple-section__date-separator {
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.couple-section__venue {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 34rem;
+  margin-inline: auto;
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.couple-section__venue strong {
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 6vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.couple-section__venue span {
+  color: var(--color-text-muted);
 }
 
 @media (min-width: 48rem) {
@@ -99,23 +182,8 @@ import { wedding } from '../data/wedding'
     padding-block: 7rem;
   }
 
-  .couple-section__header {
-    margin-bottom: var(--space-16);
-  }
-
-  .couple-section__profiles {
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    gap: var(--space-6);
-  }
-
-  .couple-section__connector {
-    flex-direction: column;
-  }
-
-  .couple-section__connector::before,
-  .couple-section__connector::after {
-    width: 1px;
-    height: 3rem;
+  .couple-section__invitation {
+    gap: var(--space-12);
   }
 }
 </style>

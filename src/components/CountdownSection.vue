@@ -48,7 +48,7 @@ function formatNumber(value: number): string {
     <div class="countdown__container">
       <p class="countdown__eyebrow">Menghitung Hari</p>
       <h2 id="countdown-title" class="countdown__title">
-        Menuju Hari Bahagia
+        MENUJU HARI BAHAGIA
       </h2>
 
       <p v-if="hasStarted" class="countdown__message" role="status">
@@ -104,7 +104,7 @@ function formatNumber(value: number): string {
   position: absolute;
   width: 8rem;
   height: 8rem;
-  border: 1px solid rgb(168 134 82 / 20%);
+  border: 1px solid rgb(189 63 112 / 20%);
   border-radius: 50%;
   content: '';
 }
@@ -130,7 +130,7 @@ function formatNumber(value: number): string {
 .countdown__eyebrow {
   margin: 0 0 var(--space-3);
   color: var(--color-gold);
-  font-size: 0.68rem;
+  font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -139,7 +139,7 @@ function formatNumber(value: number): string {
 .countdown__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 9vw, 3.5rem);
+  font-size: 2.8rem;
   font-weight: 400;
   line-height: 1.1;
 }
@@ -186,7 +186,7 @@ function formatNumber(value: number): string {
 .countdown__message {
   margin: var(--space-8) 0 0;
   color: var(--color-text-muted);
-  font-size: 0.75rem;
+  font-size: 1.81rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }

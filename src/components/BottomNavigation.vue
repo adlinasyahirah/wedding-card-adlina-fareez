@@ -4,14 +4,14 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 interface NavigationItem {
   id: string
   label: string
-  icon: 'home' | 'calendar' | 'gallery' | 'map' | 'contact'
+  icon: 'calendar' | 'contact' | 'heart' | 'home' | 'timeline'
 }
 
 const navigationItems: NavigationItem[] = [
   { id: 'event', label: 'Majlis', icon: 'calendar' },
-  { id: 'gallery', label: 'Galeri', icon: 'gallery' },
-    { id: 'hero', label: 'Utama', icon: 'home' },
-  { id: 'maps', label: 'Peta', icon: 'map' },
+  { id: 'tentative', label: 'Tentatif', icon: 'timeline' },
+  { id: 'hero', label: 'Utama', icon: 'home' },
+  { id: 'guestbook', label: 'Ucapan', icon: 'heart' },
   { id: 'contact', label: 'Hubungi', icon: 'contact' },
 ]
 
@@ -56,7 +56,10 @@ function setActiveSection(id: string): void {
       v-for="item in navigationItems"
       :key="item.id"
       class="bottom-navigation__item"
-      :class="{ 'bottom-navigation__item--active': activeSection === item.id }"
+      :class="{
+        'bottom-navigation__item--active': activeSection === item.id,
+        'bottom-navigation__item--home': item.id === 'hero',
+      }"
       :href="`#${item.id}`"
       :aria-current="activeSection === item.id ? 'location' : undefined"
       @click="setActiveSection(item.id)"
@@ -78,20 +81,21 @@ function setActiveSection(id: string): void {
         <path d="M8 3v4M16 3v4M3 10h18" />
       </svg>
       <svg
-        v-else-if="item.icon === 'gallery'"
+        v-else-if="item.icon === 'timeline'"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        <rect x="3" y="4" width="18" height="16" rx="2" />
-        <circle cx="9" cy="10" r="2" />
-        <path d="m4 18 5-4 3 2 3-4 5 5" />
+        <circle cx="6" cy="6" r="1.5" />
+        <circle cx="6" cy="12" r="1.5" />
+        <circle cx="6" cy="18" r="1.5" />
+        <path d="M10 6h10M10 12h10M10 18h10" />
       </svg>
       <svg
-        v-else-if="item.icon === 'map'"
+        v-else-if="item.icon === 'heart'"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15" />
+        <path d="M20.8 5.7a5.5 5.5 0 0 0-7.8 0L12 6.8l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.5a5.5 5.5 0 0 0 0-7.8Z" />
       </svg>
       <svg v-else viewBox="0 0 24 24" aria-hidden="true">
         <path d="M20 11.5a8 8 0 0 1-9 7.9L5 21l1.6-4.6A8 8 0 1 1 20 11.5Z" />
@@ -116,7 +120,7 @@ function setActiveSection(id: string): void {
   min-height: 4.25rem;
   margin-inline: auto;
   padding: 0.4rem;
-  border: 1px solid rgb(168 134 82 / 28%);
+  border: 1px solid rgb(189 63 112 / 28%);
   border-radius: 1.4rem;
   background: rgb(253 251 247 / 92%);
   box-shadow: 0 0.75rem 2.5rem rgb(51 42 33 / 18%);
@@ -153,7 +157,7 @@ function setActiveSection(id: string): void {
 
 .bottom-navigation__item--active {
   color: var(--color-gold);
-  background: rgb(216 195 165 / 22%);
+  background: rgb(235 186 208 / 22%);
 }
 
 .bottom-navigation__item:focus-visible {
@@ -163,10 +167,11 @@ function setActiveSection(id: string): void {
 
 @media (min-width: 48rem) {
   .bottom-navigation {
-    right: var(--space-6);
+    right: auto;
     bottom: var(--space-6);
-    left: auto;
+    left: 50%;
     width: 29rem;
+    transform: translateX(-50%);
   }
 }
 </style>

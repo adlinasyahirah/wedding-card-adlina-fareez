@@ -46,11 +46,11 @@ const initial = computed(() => props.person.name.trim().charAt(0).toUpperCase())
   aspect-ratio: 4 / 5;
   margin-inline: auto;
   overflow: hidden;
-  border: 1px solid rgb(168 134 82 / 45%);
+  border: 1px solid rgb(189 63 112 / 45%);
   border-radius: 9rem 9rem 1rem 1rem;
   background:
     radial-gradient(circle at 50% 32%, rgb(255 255 255 / 90%), transparent 36%),
-    linear-gradient(150deg, var(--color-cream-100), #e7d5bd);
+    linear-gradient(150deg, var(--color-cream-100), #f2dce6);
   box-shadow: 0 1.25rem 3rem rgb(70 62 53 / 10%);
   place-items: center;
 }

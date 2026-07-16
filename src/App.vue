@@ -5,13 +5,10 @@ import ContactSection from './components/ContactSection.vue'
 import CountdownSection from './components/CountdownSection.vue'
 import CoupleSection from './components/CoupleSection.vue'
 import EventSection from './components/EventSection.vue'
-import GallerySection from './components/GallerySection.vue'
-import GiftSection from './components/GiftSection.vue'
+import GuestbookSection from './components/GuestbookSection.vue'
 import HeroSection from './components/HeroSection.vue'
-import MapsSection from './components/MapsSection.vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import OpeningCover from './components/OpeningCover.vue'
-import ParentsSection from './components/ParentsSection.vue'
 import TentativeSection from './components/TentativeSection.vue'
 import { wedding } from './data/wedding'
 
@@ -35,14 +32,11 @@ function openInvitation(): void {
     <OpeningCover v-if="!isInvitationOpen" @open-invitation="openInvitation" />
     <template v-else>
       <HeroSection />
-      <CountdownSection />
       <CoupleSection />
-      <ParentsSection />
       <EventSection />
       <TentativeSection />
-      <GallerySection />
-      <MapsSection />
-      <GiftSection />
+      <CountdownSection />
+      <GuestbookSection />
       <ContactSection />
       <BottomNavigation />
     </template>

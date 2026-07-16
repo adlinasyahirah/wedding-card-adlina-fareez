@@ -1,21 +1,61 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { wedding } from '../data/wedding'
+
+const activeTab = ref(wedding.tentatives[0]?.id ?? '')
+
+const activeSchedule = computed(() =>
+  wedding.tentatives.find((schedule) => schedule.id === activeTab.value),
+)
 </script>
 
 <template>
-  <section v-reveal class="tentative-section" aria-labelledby="tentative-heading">
+  <section
+    id="tentative"
+    v-reveal
+    class="tentative-section"
+    aria-labelledby="tentative-heading"
+  >
     <div class="tentative-section__container">
       <header class="tentative-section__header">
         <p class="tentative-section__eyebrow">Atur Cara</p>
-        <h2 id="tentative-heading" class="tentative-section__title">Tentatif Majlis</h2>
+        <h2 id="tentative-heading" class="tentative-section__title">TENTATIF MAJLIS</h2>
         <p class="tentative-section__intro">
-          Susunan acara untuk meraikan hari istimewa kami bersama anda.
+          Susunan acara untuk meraikan hari istimewa kami.
         </p>
       </header>
 
-      <ol v-if="wedding.tentative.length" class="timeline">
+      <div
+        v-if="wedding.tentatives.length"
+        class="tentative-section__tabs"
+        role="tablist"
+        aria-label="Pilih tentatif majlis"
+      >
+        <button
+          v-for="schedule in wedding.tentatives"
+          :id="`tab-${schedule.id}`"
+          :key="schedule.id"
+          class="tentative-section__tab"
+          :class="{ 'tentative-section__tab--active': activeTab === schedule.id }"
+          type="button"
+          role="tab"
+          :aria-selected="activeTab === schedule.id"
+          :aria-controls="`panel-${schedule.id}`"
+          @click="activeTab = schedule.id"
+        >
+          {{ schedule.title }}
+        </button>
+      </div>
+
+      <ol
+        v-if="activeSchedule"
+        :id="`panel-${activeSchedule.id}`"
+        class="timeline"
+        role="tabpanel"
+        :aria-labelledby="`tab-${activeSchedule.id}`"
+      >
         <li
-          v-for="(item, index) in wedding.tentative"
+          v-for="(item, index) in activeSchedule.items"
           :key="`${item.time}-${item.title}`"
           class="timeline__item"
         >
@@ -27,9 +67,9 @@ import { wedding } from '../data/wedding'
             <time v-if="item.time" class="timeline__time">{{ item.time }}</time>
             <p v-else class="timeline__time">Masa akan dikemas kini</p>
             <h3 class="timeline__title">{{ item.title }}</h3>
-            <p v-if="item.description" class="timeline__description">
-              {{ item.description }}
-            </p>
+            <ul v-if="item.details?.length" class="timeline__details">
+              <li v-for="detail in item.details" :key="detail">{{ detail }}</li>
+            </ul>
           </article>
         </li>
       </ol>
@@ -62,7 +102,7 @@ import { wedding } from '../data/wedding'
 .tentative-section__eyebrow {
   margin: 0 0 var(--space-3);
   color: var(--color-gold);
-  font-size: 0.68rem;
+  font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -71,7 +111,7 @@ import { wedding } from '../data/wedding'
 .tentative-section__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 11vw, 4rem);
+  font-size: 2.8rem;
   font-weight: 400;
   line-height: 1.1;
 }
@@ -81,6 +121,43 @@ import { wedding } from '../data/wedding'
   color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.8;
+}
+
+.tentative-section__tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin-bottom: var(--space-12);
+  padding: var(--space-1);
+  border: 1px solid rgb(189 63 112 / 24%);
+  border-radius: 999px;
+  background: var(--color-cream-100);
+}
+
+.tentative-section__tab {
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.65rem var(--space-3);
+  border: 0;
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  background: transparent;
+  cursor: pointer;
+  font-size: clamp(0.65rem, 2.8vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tentative-section__tab--active {
+  color: var(--color-white);
+  background: var(--color-primary);
+  box-shadow: 0 0.4rem 1.2rem rgb(189 63 112 / 18%);
+}
+
+.tentative-section__tab:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 .timeline {
@@ -103,7 +180,7 @@ import { wedding } from '../data/wedding'
   bottom: 0;
   left: 1.5rem;
   width: 1px;
-  background: rgb(168 134 82 / 35%);
+  background: rgb(189 63 112 / 35%);
   content: '';
 }
 
@@ -113,11 +190,11 @@ import { wedding } from '../data/wedding'
   display: grid;
   width: 3rem;
   height: 3rem;
-  border: 1px solid rgb(168 134 82 / 50%);
+  border: 1px solid rgb(189 63 112 / 50%);
   border-radius: 50%;
   color: var(--color-gold);
   background: var(--color-cream-50);
-  font-size: 0.63rem;
+  font-size: 0.93rem;
   letter-spacing: 0.08em;
   place-items: center;
 }
@@ -129,7 +206,7 @@ import { wedding } from '../data/wedding'
 .timeline__time {
   margin: 0 0 var(--space-2);
   color: var(--color-gold);
-  font-size: 0.65rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -138,16 +215,21 @@ import { wedding } from '../data/wedding'
 .timeline__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 7vw, 2rem);
-  font-weight: 400;
+  font-size: 1.4rem;
+  font-weight: 500;
   line-height: 1.2;
 }
 
-.timeline__description {
+.timeline__details {
   margin: var(--space-3) 0 0;
+  padding-left: 1.15rem;
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   line-height: 1.7;
+}
+
+.timeline__details li + li {
+  margin-top: var(--space-1);
 }
 
 .tentative-section__empty {

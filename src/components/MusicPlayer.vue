@@ -93,7 +93,7 @@ defineExpose({ play, pause })
   width: 2.9rem;
   min-height: 2.9rem;
   padding: 0;
-  border: 1px solid rgb(168 134 82 / 40%);
+  border: 1px solid rgb(189 63 112 / 40%);
   border-radius: 50%;
   color: var(--color-gold);
   background: rgb(253 251 247 / 90%);

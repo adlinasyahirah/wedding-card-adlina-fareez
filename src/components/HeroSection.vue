@@ -33,25 +33,26 @@ const heroStyle = computed(() =>
     </div>
 
     <div class="hero-section__content">
-      <p class="hero-section__eyebrow">Undangan Perkahwinan</p>
+      <p class="hero-section__eyebrow">{{ wedding.ceremonyTitle }}</p>
 
       <h1 id="hero-title" class="hero-section__names">
         <span>{{ wedding.bride.name }}</span>
         <span class="hero-section__ampersand" aria-label="dan">&amp;</span>
         <span>{{ wedding.groom.name }}</span>
       </h1>
+      <div class="hero-section__details">
+        <p class="hero-section__date">
+          <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
+        </p>
 
-      <div class="hero-section__divider" aria-hidden="true">
-        <span></span>
+        <div class="hero-section__divider" aria-hidden="true">
+          <span></span>
+        </div>
+
+        <p v-if="wedding.hashtag" class="hero-section__hashtag">
+          {{ wedding.hashtag }}
+        </p>
       </div>
-
-      <p class="hero-section__invitation">
-        {{ wedding.invitationText }}
-      </p>
-
-      <p class="hero-section__date">
-        <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-      </p>
     </div>
 
     <div class="hero-section__botanical hero-section__botanical--bottom" aria-hidden="true">
@@ -73,8 +74,8 @@ const heroStyle = computed(() =>
   padding: clamp(5rem, 14vh, 8rem) var(--space-6);
   color: var(--color-text);
   background:
-    radial-gradient(circle at 5% 8%, rgb(216 195 165 / 36%), transparent 25%),
-    radial-gradient(circle at 95% 92%, rgb(168 134 82 / 18%), transparent 27%),
+    radial-gradient(circle at 5% 8%, rgb(235 186 208 / 36%), transparent 25%),
+    radial-gradient(circle at 95% 92%, rgb(189 63 112 / 18%), transparent 27%),
     linear-gradient(165deg, var(--color-cream-50), var(--color-cream-100));
   background-position: center;
   background-size: cover;
@@ -103,46 +104,41 @@ const heroStyle = computed(() =>
 
 .hero-section__content {
   align-self: center;
-  width: min(100%, 34rem);
+  width: min(100%, 48rem);
   margin-inline: auto;
   text-align: center;
 }
 
 .hero-section__eyebrow {
-  margin: 0 0 var(--space-8);
-  color: var(--color-gold);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.3em;
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 clamp(2rem, 6vh, 3.5rem);
+  color: var(--color-text);
+  font-size: 1.53rem;
+  letter-spacing: 0.12em;
+  line-height: 1.55;
   text-transform: uppercase;
-}
-
-.hero-section--with-image .hero-section__eyebrow {
-  color: var(--color-champagne);
 }
 
 .hero-section__names {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 0;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(3.25rem, 17vw, 6.5rem);
+  color: var(--color-primary);
+  font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: clamp(3.75rem, 18vw, 6.25rem);
   font-weight: 400;
-  line-height: 0.82;
-  letter-spacing: -0.055em;
+  line-height: 0.78;
+  letter-spacing: 0.01em;
 }
 
 .hero-section__ampersand {
   margin-block: var(--space-4);
-  color: var(--color-gold);
-  font-size: 0.43em;
-  font-style: italic;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: 0.42em;
   line-height: 1;
-}
-
-.hero-section--with-image .hero-section__ampersand {
-  color: var(--color-champagne);
 }
 
 .hero-section__divider {
@@ -150,7 +146,7 @@ const heroStyle = computed(() =>
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  margin: var(--space-8) auto;
+  margin: var(--space-4) auto;
 }
 
 .hero-section__divider::before,
@@ -181,12 +177,25 @@ const heroStyle = computed(() =>
   color: rgb(255 255 255 / 88%);
 }
 
+.hero-section__details {
+  margin-top: clamp(3.5rem, 9vh, 5.5rem);
+}
+
 .hero-section__date {
-  margin: var(--space-8) 0 0;
+  margin: 0;
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.hero-section__hashtag {
+  margin: 0;
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 .hero-section__botanical {
