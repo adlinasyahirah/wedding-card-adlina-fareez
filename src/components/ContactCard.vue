@@ -13,21 +13,19 @@ const phoneHref = computed(() => {
   return normalizedPhone ? `tel:${normalizedPhone}` : ''
 })
 
-const initial = computed(() => props.contact.name.trim().charAt(0).toUpperCase())
 </script>
 
 <template>
   <article class="contact-card">
-    <div class="contact-card__monogram" aria-hidden="true">{{ initial }}</div>
+    <div class="contact-card__monogram">{{ contact.name }}</div>
     <p class="contact-card__role">{{ contact.role }}</p>
-    <h3 class="contact-card__name">{{ contact.name }}</h3>
 
     <p v-if="contact.phone" class="contact-card__phone">{{ contact.phone }}</p>
     <p v-else class="contact-card__empty">Nombor telefon akan dikemas kini.</p>
 
     <div v-if="phoneHref || contact.whatsappUrl" class="contact-card__actions">
       <a v-if="phoneHref" class="contact-card__button" :href="phoneHref">
-        Panggil
+        Call
       </a>
       <a
         v-if="contact.whatsappUrl"
@@ -46,24 +44,20 @@ const initial = computed(() => props.contact.name.trim().charAt(0).toUpperCase()
 .contact-card {
   position: relative;
   padding: var(--space-8) var(--space-6);
-  border: 1px solid rgb(168 134 82 / 30%);
+  border: 1px solid rgb(189 63 112 / 30%);
   background: rgb(255 255 255 / 48%);
   text-align: center;
 }
 
 .contact-card__monogram {
-  display: grid;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: fit-content;
   margin: 0 auto var(--space-6);
-  border: 1px solid rgb(168 134 82 / 45%);
-  border-radius: 50%;
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgb(189 63 112 / 45%);
   color: var(--color-gold);
-  background: var(--color-cream-50);
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: clamp(1.8rem, 8vw, 2.5rem);
   font-style: italic;
-  place-items: center;
 }
 
 .contact-card__role {
@@ -73,14 +67,6 @@ const initial = computed(() => props.contact.name.trim().charAt(0).toUpperCase()
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-}
-
-.contact-card__name {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 8vw, 2.5rem);
-  font-weight: 400;
-  line-height: 1.15;
 }
 
 .contact-card__phone,

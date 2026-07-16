@@ -31,12 +31,19 @@ export interface WeddingEvent {
   dateTime: string
   startTime: string
   endTime: string
+  note?: string
 }
 
 export interface TentativeItem {
   time: string
   title: string
-  description?: string
+  details?: string[]
+}
+
+export interface TentativeSchedule {
+  id: string
+  title: string
+  items: TentativeItem[]
 }
 
 export interface GalleryImage {
@@ -59,17 +66,17 @@ export interface WeddingData {
     bride: Parents
     groom: Parents
   }
+  ceremonyTitle: string
+  hashtag: string
   invitationText: string
   date: string
+  hijriDate: string
   dateTime: string
-  event: WeddingEvent
-  tentative: TentativeItem[]
+  events: WeddingEvent[]
+  tentatives: TentativeSchedule[]
   venue: Venue
   gift: WeddingGift
-  contacts: {
-    bride: WeddingContact
-    groom: WeddingContact
-  }
+  contacts: WeddingContact[]
   music: string
   gallery: GalleryImage[]
 }

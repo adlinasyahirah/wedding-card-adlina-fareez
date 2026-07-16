@@ -7,16 +7,18 @@ import ContactCard from './ContactCard.vue'
   <section id="contact" v-reveal class="contact-section" aria-labelledby="contact-heading">
     <div class="contact-section__container">
       <header class="contact-section__header">
-        <p class="contact-section__eyebrow">Hubungi Kami</p>
-        <h2 id="contact-heading" class="contact-section__title">Ada Pertanyaan?</h2>
+        <p class="contact-section__eyebrow">Hubungi</p>
         <p class="contact-section__intro">
           Hubungi wakil keluarga kami sekiranya anda memerlukan bantuan mengenai majlis.
         </p>
       </header>
 
       <div class="contact-section__grid">
-        <ContactCard :contact="wedding.contacts.bride" />
-        <ContactCard :contact="wedding.contacts.groom" />
+        <ContactCard
+          v-for="contact in wedding.contacts"
+          :key="contact.phone"
+          :contact="contact"
+        />
       </div>
     </div>
   </section>
@@ -27,12 +29,12 @@ import ContactCard from './ContactCard.vue'
   padding: 5rem var(--space-4) 7rem;
   color: var(--color-text);
   background:
-    radial-gradient(circle at 50% 100%, rgb(216 195 165 / 30%), transparent 28rem),
+    radial-gradient(circle at 50% 100%, rgb(235 186 208 / 30%), transparent 28rem),
     var(--color-cream-50);
 }
 
 .contact-section__container {
-  width: min(100%, 52rem);
+  width: min(100%, 68rem);
   margin-inline: auto;
 }
 
@@ -45,18 +47,10 @@ import ContactCard from './ContactCard.vue'
 .contact-section__eyebrow {
   margin: 0 0 var(--space-3);
   color: var(--color-gold);
-  font-size: 0.68rem;
+  font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-}
-
-.contact-section__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 11vw, 4rem);
-  font-weight: 400;
-  line-height: 1.1;
 }
 
 .contact-section__intro {

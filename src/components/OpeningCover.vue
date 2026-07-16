@@ -1,21 +1,32 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { wedding } from '../data/wedding'
+import floralFrameDesktop from '../assets/images/opening-floral-frame-desktop.png'
+import floralFrame from '../assets/images/opening-floral-frame.png'
 
 interface Props {
   backgroundImage?: string
+  desktopBackgroundImage?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  backgroundImage: floralFrame,
+  desktopBackgroundImage: floralFrameDesktop,
+})
 
 const emit = defineEmits<{
   openInvitation: []
 }>()
 
-const coverStyle = computed(() =>
-  props.backgroundImage
-    ? { backgroundImage: `url("${props.backgroundImage}")` }
-    : undefined,
+const coverStyle = computed(() => ({
+  '--opening-background-mobile': `url("${props.backgroundImage}")`,
+  '--opening-background-desktop': `url("${props.desktopBackgroundImage}")`,
+}))
+
+const weddingDay = computed(() =>
+  new Intl.DateTimeFormat('ms-MY', { weekday: 'long' })
+    .format(new Date(wedding.dateTime))
+    .toUpperCase(),
 )
 
 function openInvitation(): void {
@@ -26,176 +37,147 @@ function openInvitation(): void {
 <template>
   <section
     class="opening-cover"
-    :class="{ 'opening-cover--with-image': backgroundImage }"
-    :style="coverStyle"
     aria-labelledby="opening-title"
   >
-    <div class="opening-cover__overlay" aria-hidden="true"></div>
+    <div class="opening-cover__card" :style="coverStyle">
+      <div class="opening-cover__content">
+        <p class="opening-cover__eyebrow">
+          <span>{{ wedding.ceremonyTitle }}</span>
+        </p>
 
-    <div class="opening-cover__frame" aria-hidden="true">
-      <span class="opening-cover__ornament">#ReezervedForSyira</span>
-    </div>
+        <h1 id="opening-title" class="opening-cover__names">
+          <span>{{ wedding.bride.name }}</span>
+          <span class="opening-cover__ampersand" aria-hidden="true">&amp;</span>
+          <span>{{ wedding.groom.name }}</span>
+        </h1>
 
-    <div class="opening-cover__content">
-      <p class="opening-cover__eyebrow">Majlis Bertaut Kasih</p>
+        <div class="opening-cover__details">
+          <p>{{ weddingDay }}</p>
+          <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
+          <p v-if="wedding.hashtag" class="opening-cover__hashtag">
+            {{ wedding.hashtag }}
+          </p>
+        </div>
 
-      <h1 id="opening-title" class="opening-cover__names">
-        <span>{{ wedding.bride.name }}</span>
-        <span class="opening-cover__ampersand" aria-hidden="true">&amp;</span>
-        <span>{{ wedding.groom.name }}</span>
-      </h1>
-
-      <p class="opening-cover__date">
-        <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-      </p>
-
-      <button class="opening-cover__button" type="button" @click="openInvitation">
-        Buka Undangan
-      </button>
+        <button class="opening-cover__button" type="button" @click="openInvitation">
+          Buka
+        </button>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
 .opening-cover {
-  position: relative;
-  isolation: isolate;
   display: grid;
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
-  padding: var(--space-4);
+  background: var(--color-cream-50);
+}
+
+.opening-cover__card {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
   color: var(--color-text);
-  background:
-    radial-gradient(circle at 50% 18%, rgb(255 255 255 / 80%), transparent 34%),
-    linear-gradient(155deg, var(--color-cream-50), var(--color-cream-100) 58%, #eadbc7);
+  background-image: var(--opening-background-mobile);
   background-position: center;
-  background-size: cover;
-}
-
-.opening-cover--with-image {
-  color: var(--color-white);
-}
-
-.opening-cover__overlay {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgb(29 23 17 / 18%) 0%,
-    rgb(29 23 17 / 38%) 48%,
-    rgb(29 23 17 / 58%) 100%
-  );
-  opacity: 0;
-}
-
-.opening-cover--with-image .opening-cover__overlay {
-  opacity: 1;
-}
-
-.opening-cover__frame {
-  position: absolute;
-  inset: var(--space-4);
-  border: 1px solid rgb(168 134 82 / 55%);
-  pointer-events: none;
-}
-
-.opening-cover__frame::before,
-.opening-cover__frame::after {
-  position: absolute;
-  left: 50%;
-  width: 3rem;
-  height: 1px;
-  background: currentColor;
-  content: '';
-  transform: translateX(-50%);
-}
-
-.opening-cover__frame::before {
-  top: 2.55rem;
-}
-
-.opening-cover__frame::after {
-  top: 4.65rem;
-}
-
-.opening-cover__ornament {
-  position: absolute;
-  top: var(--space-8);
-  left: 50%;
-  color: var(--color-gold);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  transform: translateX(-50%);
-}
-
-.opening-cover--with-image .opening-cover__frame {
-  border-color: rgb(255 255 255 / 55%);
-}
-
-.opening-cover--with-image .opening-cover__ornament {
-  color: inherit;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .opening-cover__content {
-  align-self: center;
-  width: min(100%, 30rem);
-  margin-inline: auto;
-  padding: 5.5rem var(--space-6) var(--space-12);
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5.75rem, 13vh, 8rem) clamp(3.5rem, 13vw, 5.5rem);
   text-align: center;
 }
 
+.opening-cover__content > * {
+  width: min(100%, 48rem);
+  margin-inline: auto;
+}
+
 .opening-cover__eyebrow {
-  margin: 0 0 var(--space-6);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.34em;
+  display: grid;
+  gap: var(--space-1);
+  margin: 0 0 clamp(2rem, 6vh, 3.5rem);
+  font-size: clamp(0.72rem, 3vw, 0.9rem);
+  letter-spacing: 0.12em;
+  line-height: 1.55;
   text-transform: uppercase;
 }
 
 .opening-cover__names {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: 0;
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(2.75rem, 16vw, 4.75rem);
+  color: var(--color-primary);
+  font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: clamp(3.75rem, 18vw, 6.25rem);
   font-weight: 400;
-  line-height: 0.94;
-  letter-spacing: -0.045em;
+  line-height: 0.78;
+  letter-spacing: 0.01em;
 }
 
 .opening-cover__ampersand {
-  color: var(--color-gold);
-  font-size: 0.5em;
-  font-style: italic;
-  line-height: 1.5;
+  margin-block: var(--space-4);
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: 0.42em;
+  line-height: 1;
 }
 
-.opening-cover--with-image .opening-cover__ampersand {
-  color: var(--color-champagne);
-}
-
-.opening-cover__date {
-  margin: var(--space-8) 0 0;
-  font-size: 0.82rem;
-  letter-spacing: 0.17em;
+.opening-cover__details {
+  margin-top: clamp(2.5rem, 7vh, 4rem);
+  font-size: clamp(0.72rem, 3vw, 0.88rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
+.opening-cover__details p,
+.opening-cover__details time {
+  display: block;
+  margin: 0;
+}
+
+.opening-cover__details time {
+  margin-top: var(--space-1);
+}
+
+.opening-cover__hashtag {
+  margin-top: var(--space-4) !important;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgb(189 63 112 / 25%);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
 .opening-cover__button {
-  min-width: 11rem;
-  margin-top: var(--space-12);
-  padding: 0.8rem 1.5rem;
-  border: 1px solid var(--color-gold);
+  width: fit-content;
+  min-width: 1rem;
+  margin-top: clamp(1.5rem, 4vh, .5rem);
+  padding: 0.52rem 1.35rem;
+  border: 1px solid var(--color-primary);
   border-radius: 999px;
   color: var(--color-white);
-  background: var(--color-gold);
+  background: var(--color-primary);
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.91rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   transition:
     color var(--transition-base),
@@ -204,7 +186,7 @@ function openInvitation(): void {
 }
 
 .opening-cover__button:hover {
-  color: var(--color-gold);
+  color: var(--color-primary);
   background: var(--color-white);
 }
 
@@ -217,23 +199,13 @@ function openInvitation(): void {
   outline-offset: 4px;
 }
 
-.opening-cover--with-image .opening-cover__button {
-  border-color: rgb(255 255 255 / 72%);
-  color: var(--color-text);
-  background: rgb(255 255 255 / 92%);
-}
-
 @media (min-width: 48rem) {
-  .opening-cover {
-    padding: var(--space-8);
-  }
-
-  .opening-cover__frame {
-    inset: var(--space-8);
+  .opening-cover__card {
+    background-image: var(--opening-background-desktop);
   }
 
   .opening-cover__content {
-    padding-inline: var(--space-8);
+    padding-inline: clamp(6rem, 15vw, 14rem);
   }
 }
 </style>

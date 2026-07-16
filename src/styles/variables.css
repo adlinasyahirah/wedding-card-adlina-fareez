@@ -1,10 +1,13 @@
 :root {
-  --color-cream-50: #fdfbf7;
-  --color-cream-100: #f7f1e8;
-  --color-champagne: #d8c3a5;
-  --color-gold: #a88652;
-  --color-text: #463e35;
-  --color-text-muted: #766b5f;
+  --color-cream-50: #fffdf9;
+  --color-cream-100: #fbf4ee;
+  --color-primary: #bd3f70;
+  --color-primary-dark: #7f294d;
+  --color-blush: #ebbad0;
+  --color-champagne: var(--color-blush);
+  --color-gold: var(--color-primary);
+  --color-text: #493940;
+  --color-text-muted: #78666e;
   --color-white: #ffffff;
 
   --font-body: Georgia, 'Times New Roman', serif;
