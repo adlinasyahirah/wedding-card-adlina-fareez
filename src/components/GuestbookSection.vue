@@ -1,52 +1,90 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { supabase } from '../lib/supabase'
 
 interface GuestMessage {
-  id: string
+  id: string | number
   name: string
   message: string
   submittedAt: string
 }
 
-const STORAGE_KEY = 'adlina-fareez-wedding-messages'
+interface GuestWishRow {
+  id: string | number
+  guest_name: string
+  wishes: string
+  created_at: string
+}
 
 const name = ref('')
 const message = ref('')
 const messages = ref<GuestMessage[]>([])
 const hasSubmitted = ref(false)
+const isLoading = ref(true)
+const isSubmitting = ref(false)
+const errorMessage = ref('')
 
-const canSubmit = computed(() => Boolean(name.value.trim() && message.value.trim()))
+const canSubmit = computed(
+  () => Boolean(name.value.trim() && message.value.trim()) && !isSubmitting.value,
+)
 
-onMounted(() => {
-  const savedMessages = window.localStorage.getItem(STORAGE_KEY)
-  if (!savedMessages) return
+function formatSubmittedAt(date: string): string {
+  return new Intl.DateTimeFormat('ms-MY', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(new Date(date))
+}
 
-  try {
-    const parsedMessages = JSON.parse(savedMessages) as GuestMessage[]
-    if (Array.isArray(parsedMessages)) messages.value = parsedMessages
-  } catch {
-    window.localStorage.removeItem(STORAGE_KEY)
+async function loadMessages(): Promise<void> {
+  isLoading.value = true
+  errorMessage.value = ''
+
+  const { data, error } = await supabase
+    .from('guest_wishes')
+    .select('id, guest_name, wishes, created_at')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    errorMessage.value = 'Ucapan tidak dapat dimuatkan. Sila cuba lagi sebentar.'
+    console.error('Failed to load guest wishes:', error)
+  } else {
+    messages.value = (data as GuestWishRow[]).map((wish) => ({
+      id: wish.id,
+      name: wish.guest_name,
+      message: wish.wishes,
+      submittedAt: formatSubmittedAt(wish.created_at),
+    }))
   }
-})
 
-function submitMessage(): void {
+  isLoading.value = false
+}
+
+onMounted(loadMessages)
+
+async function submitMessage(): Promise<void> {
   if (!canSubmit.value) return
 
-  const newMessage: GuestMessage = {
-    id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-    name: name.value.trim(),
-    message: message.value.trim(),
-    submittedAt: new Intl.DateTimeFormat('ms-MY', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    }).format(new Date()),
+  isSubmitting.value = true
+  hasSubmitted.value = false
+  errorMessage.value = ''
+
+  const { error } = await supabase.from('guest_wishes').insert({
+    guest_name: name.value.trim(),
+    wishes: message.value.trim(),
+  })
+
+  if (error) {
+    errorMessage.value = 'Ucapan tidak dapat dihantar. Sila cuba lagi.'
+    console.error('Failed to submit guest wish:', error)
+    isSubmitting.value = false
+    return
   }
 
-  messages.value.unshift(newMessage)
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(messages.value))
   name.value = ''
   message.value = ''
   hasSubmitted.value = true
+  isSubmitting.value = false
+  await loadMessages()
 }
 </script>
 
@@ -99,18 +137,26 @@ function submitMessage(): void {
           </div>
 
           <button class="guestbook-form__button" type="submit" :disabled="!canSubmit">
-            Hantar Ucapan
+            {{ isSubmitting ? 'Menghantar...' : 'Hantar Ucapan' }}
           </button>
 
           <p v-if="hasSubmitted" class="guestbook-form__status" role="status">
-            Terima kasih. Ucapan anda telah disimpan.
+            Terima kasih. Ucapan anda telah dihantar.
+          </p>
+
+          <p v-if="errorMessage" class="guestbook-form__error" role="alert">
+            {{ errorMessage }}
           </p>
         </form>
 
         <div class="guestbook-messages" aria-live="polite">
           <h3>Ucapan Tetamu</h3>
 
-          <div v-if="messages.length" class="guestbook-messages__list">
+          <p v-if="isLoading" class="guestbook-messages__empty">
+            Memuatkan ucapan...
+          </p>
+
+          <div v-else-if="messages.length" class="guestbook-messages__list">
             <article
               v-for="guestMessage in messages"
               :key="guestMessage.id"
@@ -268,6 +314,12 @@ function submitMessage(): void {
 .guestbook-form__status {
   margin: 0;
   color: var(--color-primary);
+  font-size: 0.8rem;
+}
+
+.guestbook-form__error {
+  margin: 0;
+  color: #a12626;
   font-size: 0.8rem;
 }
 
