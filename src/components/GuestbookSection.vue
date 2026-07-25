@@ -117,7 +117,7 @@ async function submitMessage(): Promise<void> {
               name="name"
               maxlength="80"
               autocomplete="name"
-              placeholder="Nama anda"
+              placeholder="Nama"
               required
             />
           </div>
@@ -171,7 +171,7 @@ async function submitMessage(): Promise<void> {
           </div>
 
           <p v-else class="guestbook-messages__empty">
-            Belum ada ucapan. Jadilah yang pertama menitipkan doa buat pasangan ini.
+            Tiada ucapan buat masa ini. Kami menantikan doa dan ucapan daripada anda.
           </p>
         </div>
       </div>
