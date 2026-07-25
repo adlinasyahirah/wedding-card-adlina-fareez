@@ -2,7 +2,11 @@
 import { computed, ref } from 'vue'
 import { wedding } from '../data/wedding'
 
-const activeTab = ref(wedding.tentatives[0]?.id ?? '')
+const activeTab = ref(
+  wedding.tentatives.find((schedule) => schedule.id === 'bersanding')?.id
+    ?? wedding.tentatives[0]?.id
+    ?? '',
+)
 
 const activeSchedule = computed(() =>
   wedding.tentatives.find((schedule) => schedule.id === activeTab.value),
@@ -19,7 +23,7 @@ const activeSchedule = computed(() =>
     <div class="tentative-section__container">
       <header class="tentative-section__header">
         <p class="tentative-section__eyebrow">Atur Cara</p>
-        <h2 id="tentative-heading" class="tentative-section__title">TENTATIF MAJLIS</h2>
+        <h3 id="tentative-heading" class="tentative-section__title">TENTATIF MAJLIS</h3>
         <p class="tentative-section__intro">
           Susunan acara untuk meraikan hari istimewa kami.
         </p>
@@ -113,6 +117,7 @@ const activeSchedule = computed(() =>
   font-family: var(--font-display);
   font-size: 2.8rem;
   font-weight: 400;
+  letter-spacing: 0.1em;
   line-height: 1.1;
 }
 
@@ -136,16 +141,16 @@ const activeSchedule = computed(() =>
 
 .tentative-section__tab {
   min-width: 0;
-  min-height: 3rem;
+  min-height: 3.25rem;
   padding: 0.65rem var(--space-3);
   border: 0;
   border-radius: 999px;
   color: var(--color-text-muted);
   background: transparent;
   cursor: pointer;
-  font-size: clamp(0.65rem, 2.8vw, 0.78rem);
+  font-size: clamp(0.78rem, 3vw, 0.95rem);
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
@@ -206,18 +211,20 @@ const activeSchedule = computed(() =>
 .timeline__time {
   margin: 0 0 var(--space-2);
   color: var(--color-gold);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
 }
 
 .timeline__title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 500;
-  line-height: 1.2;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 3.8vw, 1.2rem);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .timeline__details {

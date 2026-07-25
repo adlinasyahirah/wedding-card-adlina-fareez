@@ -211,9 +211,11 @@ async function submitMessage(): Promise<void> {
 .guestbook-section__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 11vw, 4rem);
+  font-size: clamp(2rem, 8vw, 2.8rem);
   font-weight: 400;
+  letter-spacing: 0.1em;
   line-height: 1.1;
+  text-transform: uppercase;
 }
 
 .guestbook-section__intro {
@@ -231,6 +233,7 @@ async function submitMessage(): Promise<void> {
 .guestbook-messages {
   padding: var(--space-8) var(--space-6);
   border: 1px solid rgb(189 63 112 / 26%);
+  border-radius: 0.35rem;
   background: rgb(255 255 255 / 58%);
 }
 

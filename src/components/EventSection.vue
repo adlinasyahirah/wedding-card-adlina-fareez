@@ -71,7 +71,7 @@ const hasDirections = computed(() =>
 
           <div class="event-card__location">
             <p class="event-card__label">Lokasi</p>
-            <p>{{ venueName }}</p>
+            <p class="event-card__venue-name">{{ venueName }}</p>
             <p v-if="wedding.venue.address" class="event-card__address">
               {{ wedding.venue.address }}
             </p>
@@ -137,6 +137,7 @@ const hasDirections = computed(() =>
   display: grid;
   overflow: hidden;
   border: 1px solid rgb(235 186 208 / 42%);
+  border-radius: 0.35rem;
   background: rgb(255 255 255 / 5%);
   box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 18%);
 }
@@ -158,9 +159,10 @@ const hasDirections = computed(() =>
 
 .event-card__month,
 .event-card__year {
-  font-size: 0.72rem;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
 }
 
@@ -232,6 +234,10 @@ const hasDirections = computed(() =>
 .event-card__location .event-card__label {
   margin-bottom: var(--space-2);
   font-size: 0.63rem;
+}
+
+.event-card__location .event-card__venue-name {
+  font-size: 1.1rem;
 }
 
 .event-card__address {

@@ -43,9 +43,14 @@ const phoneHref = computed(() => {
 <style scoped>
 .contact-card {
   position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
   padding: var(--space-8) var(--space-6);
   border: 1px solid rgb(189 63 112 / 30%);
+  border-radius: 0.35rem;
   background: rgb(255 255 255 / 48%);
+  box-shadow: 0 0.75rem 2rem rgb(127 41 77 / 6%);
   text-align: center;
 }
 
@@ -55,15 +60,17 @@ const phoneHref = computed(() => {
   padding-bottom: var(--space-2);
   border-bottom: 1px solid rgb(189 63 112 / 45%);
   color: var(--color-gold);
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 8vw, 2.5rem);
-  font-style: italic;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
 .contact-card__role {
   margin: 0 0 var(--space-2);
   color: var(--color-gold);
-  font-size: 0.62rem;
+  font-size: 0.84rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -86,7 +93,8 @@ const phoneHref = computed(() => {
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-3);
-  margin-top: var(--space-6);
+  margin-top: auto;
+  padding-top: var(--space-6);
 }
 
 .contact-card__button {
@@ -99,7 +107,7 @@ const phoneHref = computed(() => {
   border: 1px solid var(--color-gold);
   border-radius: 999px;
   color: var(--color-gold);
-  font-size: 0.68rem;
+  font-size: 0.84rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-decoration: none;
@@ -114,5 +122,15 @@ const phoneHref = computed(() => {
 .contact-card__button:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
+}
+
+@media (min-width: 64rem) {
+  .contact-card {
+    padding-inline: var(--space-4);
+  }
+
+  .contact-card__button {
+    width: 100%;
+  }
 }
 </style>

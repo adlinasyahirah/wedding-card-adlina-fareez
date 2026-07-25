@@ -48,7 +48,7 @@ function formatNumber(value: number): string {
     <div class="countdown__container">
       <p class="countdown__eyebrow">Menghitung Hari</p>
       <h2 id="countdown-title" class="countdown__title">
-        MENUJU HARI BAHAGIA
+        Menuju Hari Bahagia
       </h2>
 
       <p v-if="hasStarted" class="countdown__message" role="status">
@@ -138,10 +138,12 @@ function formatNumber(value: number): string {
 
 .countdown__title {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: 2.8rem;
+  color: var(--color-primary);
+  font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: clamp(1.75rem, 6vw, 2.15rem);
   font-weight: 400;
-  line-height: 1.1;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
 }
 
 .countdown__grid {
@@ -149,6 +151,10 @@ function formatNumber(value: number): string {
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   align-items: start;
   margin-top: var(--space-12);
+  padding: clamp(1.5rem, 6vw, 2.5rem) clamp(0.75rem, 4vw, 2rem);
+  border: 1px solid rgb(189 63 112 / 24%);
+  border-radius: 0.35rem;
+  background: rgb(255 255 255 / 42%);
 }
 
 .countdown__item {

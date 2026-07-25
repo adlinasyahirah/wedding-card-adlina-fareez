@@ -13,6 +13,12 @@ const heroStyle = computed(() =>
     ? { backgroundImage: `url("${props.backgroundImage}")` }
     : undefined,
 )
+
+const weddingDay = computed(() =>
+  new Intl.DateTimeFormat('ms-MY', { weekday: 'long' })
+    .format(new Date(wedding.dateTime))
+    .toUpperCase(),
+)
 </script>
 
 <template>
@@ -40,15 +46,10 @@ const heroStyle = computed(() =>
         <span class="hero-section__ampersand" aria-label="dan">&amp;</span>
         <span>{{ wedding.groom.name }}</span>
       </h1>
+
       <div class="hero-section__details">
-        <p class="hero-section__date">
-          <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-        </p>
-
-        <div class="hero-section__divider" aria-hidden="true">
-          <span></span>
-        </div>
-
+        <p>{{ weddingDay }}</p>
+        <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
         <p v-if="wedding.hashtag" class="hero-section__hashtag">
           {{ wedding.hashtag }}
         </p>
@@ -71,7 +72,7 @@ const heroStyle = computed(() =>
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
-  padding: clamp(5rem, 14vh, 8rem) var(--space-6);
+  padding: clamp(5.75rem, 13vh, 8rem) clamp(3.5rem, 13vw, 5.5rem);
   color: var(--color-text);
   background:
     radial-gradient(circle at 5% 8%, rgb(235 186 208 / 36%), transparent 25%),
@@ -141,30 +142,6 @@ const heroStyle = computed(() =>
   line-height: 1;
 }
 
-.hero-section__divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  margin: var(--space-4) auto;
-}
-
-.hero-section__divider::before,
-.hero-section__divider::after {
-  width: 2.75rem;
-  height: 1px;
-  background: currentColor;
-  content: '';
-  opacity: 0.38;
-}
-
-.hero-section__divider span {
-  width: 0.35rem;
-  height: 0.35rem;
-  border: 1px solid currentColor;
-  transform: rotate(45deg);
-}
-
 .hero-section__invitation {
   max-width: 27rem;
   margin: 0 auto;
@@ -178,19 +155,28 @@ const heroStyle = computed(() =>
 }
 
 .hero-section__details {
-  margin-top: clamp(3.5rem, 9vh, 5.5rem);
-}
-
-.hero-section__date {
-  margin: 0;
-  font-size: 0.76rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
+  margin-top: clamp(2.5rem, 7vh, 4rem);
+  font-size: clamp(0.72rem, 3vw, 0.88rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.hero-section__hashtag {
+.hero-section__details p,
+.hero-section__details time {
+  display: block;
   margin: 0;
+}
+
+.hero-section__details time {
+  margin-top: var(--space-1);
+}
+
+.hero-section__details .hero-section__hashtag {
+  width: min(82%, 18rem);
+  margin-top: var(--space-4);
+  margin-inline: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgb(189 63 112 / 25%);
   color: var(--color-primary);
   font-family: var(--font-display);
   font-size: 0.82rem;
@@ -263,7 +249,7 @@ const heroStyle = computed(() =>
 
 @media (min-width: 48rem) {
   .hero-section {
-    padding-inline: var(--space-12);
+    padding-inline: clamp(6rem, 15vw, 14rem);
   }
 
   .hero-section__botanical {

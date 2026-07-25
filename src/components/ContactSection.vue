@@ -7,7 +7,7 @@ import ContactCard from './ContactCard.vue'
   <section id="contact" v-reveal class="contact-section" aria-labelledby="contact-heading">
     <div class="contact-section__container">
       <header class="contact-section__header">
-        <p class="contact-section__eyebrow">Hubungi</p>
+        <p id="contact-heading" class="contact-section__eyebrow">Hubungi</p>
         <p class="contact-section__intro">
           Hubungi wakil keluarga kami sekiranya anda memerlukan bantuan mengenai majlis.
         </p>
@@ -34,7 +34,7 @@ import ContactCard from './ContactCard.vue'
 }
 
 .contact-section__container {
-  width: min(100%, 68rem);
+  width: min(100%, 64rem);
   margin-inline: auto;
 }
 
@@ -63,6 +63,7 @@ import ContactCard from './ContactCard.vue'
 .contact-section__grid {
   display: grid;
   gap: var(--space-4);
+  align-items: stretch;
 }
 
 @media (min-width: 48rem) {
@@ -73,6 +74,12 @@ import ContactCard from './ContactCard.vue'
   .contact-section__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6);
+  }
+}
+
+@media (min-width: 64rem) {
+  .contact-section__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 </style>

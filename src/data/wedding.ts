@@ -53,11 +53,11 @@ export const wedding: WeddingData = {
       title: "Majlis Akad Nikah",
       items: [
         {
-          time: "8:00 AM",
-          title: "Ketibaan keluarga & tetamu",
+          time: "8:00 PAGI",
+          title: "Ketibaan keluarga & tetamu terdekat",
         },
         {
-          time: "8:30 AM – 8:45 AM",
+          time: "8:30 PAGI – 8:45 PAGI",
           title: "Ketibaan jurunikah, wali & saksi",
           details: [
             "Ketibaan & perarakan masuk Jurunikah, Wali & Saksi",
@@ -67,7 +67,7 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "Anggaran 9:00 AM",
+          time: "Anggaran 9:00 PAGI",
           title: "Majlis Ijab & Qabul",
           details: [
             "Khutbah Nikah",
@@ -78,7 +78,7 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "9:30 AM",
+          time: "9:30 PAGI",
           title: "Majlis Ijab & Qabul selesai",
           details: [
             "Sesi Batal Air Sembahyang",
@@ -87,15 +87,15 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "9:40 AM",
+          time: "9:40 PAGI",
           title: "Sesi Salam Restu",
         },
         {
-          time: "9:45 AM",
+          time: "9:45 PAGI",
           title: "Sesi bergambar",
         },
         {
-          time: "10:00 AM",
+          time: "10:00 PAGI",
           title: "Jamuan Ringkas",
         },
       ],
@@ -105,36 +105,36 @@ export const wedding: WeddingData = {
       title: "Majlis Bersanding",
       items: [
         {
-          time: "11:30 AM",
+          time: "11:30 PAGI",
           title: "Ketibaan Tetamu",
           details: ["Majlis bermula"],
         },
         {
-          time: "12:15 PM",
+          time: "12:15 PETANG",
           title: "Pengantin tiba di Dewan Puncak Arabella",
         },
         {
-          time: "12:20 PM",
+          time: "12:20 PETANG",
           title: "Perarakan Masuk Pengantin",
         },
         {
-          time: "12:25 PM",
+          time: "12:25 PETANG",
           title: "Bacaan Doa",
         },
         {
-          time: "12:35 PM",
+          time: "12:35 PETANG",
           title: "Salam Restu",
         },
         {
-          time: "12:45 PM",
+          time: "12:45 PETANG",
           title: "Makan Beradab",
         },
         {
-          time: "1:00 PM",
+          time: "1:00 PETANG",
           title: "Sesi Memotong Kek",
         },
         {
-          time: "1:10 PM",
+          time: "1:10 PETANG",
           title: "Sesi Bergambar",
           details: [
             "Kedua-dua keluarga",
@@ -144,7 +144,7 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "3:30 PM",
+          time: "3:30 PETANG",
           title: "Majlis tamat",
         },
       ],

@@ -110,7 +110,7 @@ function openInvitation(): void {
   display: grid;
   gap: var(--space-1);
   margin: 0 0 clamp(2rem, 6vh, 3.5rem);
-  font-size: clamp(0.72rem, 3vw, 0.9rem);
+  font-size: 1.53rem;
   letter-spacing: 0.12em;
   line-height: 1.55;
   text-transform: uppercase;
@@ -154,8 +154,10 @@ function openInvitation(): void {
   margin-top: var(--space-1);
 }
 
-.opening-cover__hashtag {
+.opening-cover__details .opening-cover__hashtag {
+  width: min(82%, 18rem);
   margin-top: var(--space-4) !important;
+  margin-inline: auto;
   padding-top: var(--space-3);
   border-top: 1px solid rgb(189 63 112 / 25%);
   color: var(--color-primary);
