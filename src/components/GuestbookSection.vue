@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { supabase } from '../lib/supabase'
+import floralRight from '../assets/images/opening-floral-right.webp'
 
 interface GuestMessage {
   id: string | number
@@ -95,12 +96,16 @@ async function submitMessage(): Promise<void> {
     class="guestbook-section"
     aria-labelledby="guestbook-heading"
   >
+    <img
+      class="guestbook-section__floral"
+      :src="floralRight"
+      alt=""
+      aria-hidden="true"
+    >
+
     <div class="guestbook-section__container">
       <header class="guestbook-section__header">
-        <p class="guestbook-section__eyebrow">Ucapan</p>
-        <h2 id="guestbook-heading" class="guestbook-section__title">
-          Titipkan Ucapan
-        </h2>
+        <p class="guestbook-section__eyebrow">Titipan Ucapan</p>
         <p class="guestbook-section__intro">
           Kehadiran dan doa restu anda merupakan hadiah yang paling bermakna buat kami.
         </p>
@@ -181,14 +186,26 @@ async function submitMessage(): Promise<void> {
 
 <style scoped>
 .guestbook-section {
+  position: relative;
+  overflow: hidden;
   padding: 5rem var(--space-4);
   color: var(--color-text);
-  background:
-    radial-gradient(circle at 85% 15%, rgb(235 186 208 / 24%), transparent 24rem),
-    var(--color-cream-100);
+  background: #f9d7dc;
+}
+
+.guestbook-section__floral {
+  position: absolute;
+  z-index: 2;
+  top: 22%;
+  right: -2rem;
+  width: clamp(7rem, 28vw, 14rem);
+  height: auto;
+  pointer-events: none;
 }
 
 .guestbook-section__container {
+  position: relative;
+  z-index: 1;
   width: min(100%, 68rem);
   margin-inline: auto;
 }
@@ -202,20 +219,19 @@ async function submitMessage(): Promise<void> {
 .guestbook-section__eyebrow {
   margin: 0 0 var(--space-3);
   color: var(--color-primary);
-  font-size: 1.5rem;
+  font-size: 1.81rem;
   font-weight: 600;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
 }
 
 .guestbook-section__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(2rem, 8vw, 2.8rem);
+  font-size: clamp(1.25rem, 5vw, 1.8rem);
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
   line-height: 1.1;
-  text-transform: uppercase;
 }
 
 .guestbook-section__intro {
@@ -234,7 +250,7 @@ async function submitMessage(): Promise<void> {
   padding: var(--space-8) var(--space-6);
   border: 1px solid rgb(189 63 112 / 26%);
   border-radius: 0.35rem;
-  background: rgb(255 255 255 / 58%);
+  background: #fffaf7;
 }
 
 .guestbook-form {
@@ -373,6 +389,19 @@ async function submitMessage(): Promise<void> {
   color: var(--color-text-muted);
   font-style: italic;
   line-height: 1.7;
+}
+
+@media (max-width: 30rem) {
+  .guestbook-section__eyebrow {
+    font-size: clamp(1.1rem, 5.2vw, 1.35rem);
+    letter-spacing: 0.18em;
+  }
+
+  .guestbook-section__floral {
+    top: 24%;
+    right: -2.5rem;
+    width: 8.5rem;
+  }
 }
 
 @media (min-width: 48rem) {

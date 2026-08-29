@@ -104,8 +104,15 @@ function toggleContact(phone: string): void {
   color: #fad9df;
   font-size: 1.81rem;
   font-weight: 600;
-  letter-spacing: 0;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
+}
+
+@media (max-width: 30rem) {
+  .contact-section__eyebrow {
+    font-size: clamp(1.1rem, 5.2vw, 1.35rem);
+    letter-spacing: 0.18em;
+  }
 }
 
 .contact-section__intro {

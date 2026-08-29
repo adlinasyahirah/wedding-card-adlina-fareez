@@ -225,6 +225,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   text-transform: uppercase;
 }
 
+@media (max-width: 30rem) {
+  .event-section__eyebrow {
+    font-size: clamp(1.1rem, 5.2vw, 1.35rem);
+    letter-spacing: 0.18em;
+  }
+}
+
 .event-card {
   display: grid;
   overflow: hidden;
