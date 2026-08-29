@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { supabase } from '../lib/supabase'
 import floralRight from '../assets/images/opening-floral-right.webp'
 
 interface GuestMessage {
@@ -40,24 +39,26 @@ async function loadMessages(): Promise<void> {
   isLoading.value = true
   errorMessage.value = ''
 
-  const { data, error } = await supabase
-    .from('guest_wishes')
-    .select('id, guest_name, wishes, created_at')
-    .order('created_at', { ascending: false })
+  try {
+    const response = await fetch('/api/wishes', {
+      headers: { Accept: 'application/json' },
+    })
 
-  if (error) {
-    errorMessage.value = 'Ucapan tidak dapat dimuatkan. Sila cuba lagi sebentar.'
-    console.error('Failed to load guest wishes:', error)
-  } else {
-    messages.value = (data as GuestWishRow[]).map((wish) => ({
+    if (!response.ok) throw new Error(`Request failed with status ${response.status}`)
+
+    const data = (await response.json()) as GuestWishRow[]
+    messages.value = data.map((wish) => ({
       id: wish.id,
       name: wish.guest_name,
       message: wish.wishes,
       submittedAt: formatSubmittedAt(wish.created_at),
     }))
+  } catch (error) {
+    errorMessage.value = 'Ucapan tidak dapat dimuatkan. Sila cuba lagi sebentar.'
+    console.error('Failed to load guest wishes:', error)
+  } finally {
+    isLoading.value = false
   }
-
-  isLoading.value = false
 }
 
 onMounted(loadMessages)
@@ -69,23 +70,28 @@ async function submitMessage(): Promise<void> {
   hasSubmitted.value = false
   errorMessage.value = ''
 
-  const { error } = await supabase.from('guest_wishes').insert({
-    guest_name: name.value.trim(),
-    wishes: message.value.trim(),
-  })
+  try {
+    const response = await fetch('/api/wishes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        guestName: name.value.trim(),
+        wishes: message.value.trim(),
+      }),
+    })
 
-  if (error) {
+    if (!response.ok) throw new Error(`Request failed with status ${response.status}`)
+
+    name.value = ''
+    message.value = ''
+    hasSubmitted.value = true
+    await loadMessages()
+  } catch (error) {
     errorMessage.value = 'Ucapan tidak dapat dihantar. Sila cuba lagi.'
     console.error('Failed to submit guest wish:', error)
+  } finally {
     isSubmitting.value = false
-    return
   }
-
-  name.value = ''
-  message.value = ''
-  hasSubmitted.value = true
-  isSubmitting.value = false
-  await loadMessages()
 }
 </script>
 

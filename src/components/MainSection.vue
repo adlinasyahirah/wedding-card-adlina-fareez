@@ -142,8 +142,6 @@ const weddingDay = computed(() =>
   height: auto;
   margin: clamp(-2.25rem, -3vh, -1rem) auto clamp(0.75rem, 2vh, 1.35rem);
   filter: drop-shadow(0 0.75rem 1.1rem rgb(111 27 55 / 10%));
-  transform-origin: center;
-  animation: portraits-breathe 4.2s ease-in-out infinite;
 }
 
 .hero-section__names {
@@ -210,24 +208,6 @@ const weddingDay = computed(() =>
   font-size: 0.82rem;
   letter-spacing: 0.02em;
   text-transform: none;
-}
-
-@keyframes portraits-breathe {
-  0%, 100% {
-    filter: drop-shadow(0 0.65rem 0.9rem rgb(111 27 55 / 8%));
-    transform: translateY(0) scale(0.985);
-  }
-
-  50% {
-    filter: drop-shadow(0 0.95rem 1.25rem rgb(111 27 55 / 16%));
-    transform: translateY(-0.3rem) scale(1.025);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-section__portraits {
-    animation: none;
-  }
 }
 
 @media (max-width: 30rem) {

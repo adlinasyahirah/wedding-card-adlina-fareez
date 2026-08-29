@@ -9,11 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.8",
+    "@neondatabase/serverless": "^1.0.2",
     "vue": "^3.5.39"
   },
   "devDependencies": {
     "@types/node": "^24.13.2",
+    "@vercel/node": "^5.5.25",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/tsconfig": "^0.9.1",
     "typescript": "~6.0.2",
