@@ -189,6 +189,6 @@ export const wedding: WeddingData = {
       whatsappUrl: "https://wa.me/60184624356",
     },
   ],
-  music: "/music/Teman Lelaki & Aziem Rashidi - Satu Bunga.mp3",
+  music: "/music/HONNE - free love (dream edit).mp3",
   gallery: [],
 };

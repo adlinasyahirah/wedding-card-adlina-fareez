@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { wedding } from '../data/wedding'
+import floralLeft from '../assets/images/opening-floral-left.webp'
 </script>
 
 <template>
@@ -9,6 +10,9 @@ import { wedding } from '../data/wedding'
 
     <div class="couple-section__container">
       <div class="couple-section__card">
+        <span class="couple-section__floral-corner" aria-hidden="true">
+          <img :src="floralLeft" alt="">
+        </span>
         <span class="couple-section__corner couple-section__corner--top-left" aria-hidden="true"></span>
         <span class="couple-section__corner couple-section__corner--top-right" aria-hidden="true"></span>
         <span class="couple-section__corner couple-section__corner--bottom-left" aria-hidden="true"></span>
@@ -67,19 +71,19 @@ import { wedding } from '../data/wedding'
   isolation: isolate;
   overflow: hidden;
   padding: 1rem var(--space-4);
-  background:
-    radial-gradient(circle at 10% 15%, rgb(235 186 208 / 22%), transparent 20rem),
-    radial-gradient(circle at 90% 85%, rgb(189 63 112 / 12%), transparent 22rem),
-    var(--color-cream-50);
+  background: #fad9df;
 }
 
 .couple-section__container {
+  position: relative;
   width: min(100%, 54rem);
+  padding-top: 0;
   margin-inline: auto;
 }
 
 .couple-section__card {
   position: relative;
+  overflow: hidden;
   padding: clamp(3rem, 8vw, 5rem) clamp(1.35rem, 7vw, 5rem);
   border: 1px solid #b62c51;
   border-radius: 0.35rem;
@@ -92,7 +96,8 @@ import { wedding } from '../data/wedding'
   inset: clamp(0.55rem, 1.8vw, 0.85rem);
   border: 3px dotted #b62c51;
   border-radius: 0.18rem;
-  background: #fad9df;
+  z-index: 0;
+  background: transparent;
   content: '';
   pointer-events: none;
 }
@@ -100,6 +105,24 @@ import { wedding } from '../data/wedding'
 .couple-section__card > * {
   position: relative;
   z-index: 1;
+}
+
+.couple-section__floral-corner {
+  position: absolute;
+  z-index: 0;
+  top: 4%;
+  bottom: 4%;
+  left: -5.5rem;
+  width: clamp(10rem, 42vw, 18rem);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.couple-section__floral-corner img {
+  width: auto;
+  max-width: none;
+  height: 100%;
+  filter: saturate(0.6);
 }
 
 .couple-section__header {

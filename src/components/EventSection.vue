@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { wedding } from '../data/wedding'
 import type { WeddingEvent } from '../types/wedding'
+import floralRight from '../assets/images/opening-floral-right.webp'
 
 const eventDate = computed(() => new Date(wedding.events[0]?.dateTime ?? wedding.dateTime))
 
@@ -66,6 +67,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
       </header>
 
       <article class="event-card">
+        <img
+          class="event-card__watermark"
+          :src="floralRight"
+          alt=""
+          aria-hidden="true"
+        >
         <div class="event-card__date" aria-hidden="true">
           <span class="event-card__day">{{ dayNumber }}</span>
           <span class="event-card__month">{{ monthName }}</span>
@@ -199,13 +206,27 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   position: relative;
   overflow: hidden;
   padding: 5rem var(--space-4);
-  color: var(--color-cream-50);
+  color: #493940;
   background:
-    radial-gradient(circle at 10% 10%, rgb(235 186 208 / 13%), transparent 24rem),
-    var(--color-primary-dark);
+    radial-gradient(circle at 10% 10%, rgb(255 255 255 / 24%), transparent 24rem),
+    #fad9df;
+}
+
+.event-card__watermark {
+  position: absolute;
+  z-index: 0;
+  right: -4.5rem;
+  bottom: -5rem;
+  width: clamp(14rem, 52vw, 24rem);
+  height: auto;
+  opacity: 0.09;
+  pointer-events: none;
+  filter: saturate(0.55) brightness(1.7);
 }
 
 .event-section__container {
+  position: relative;
+  z-index: 1;
   width: min(100%, 58rem);
   margin-inline: auto;
 }
@@ -218,7 +239,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .event-section__eyebrow {
   margin: 0 0 var(--space-3);
-  color: var(--color-champagne);
+  color: #b62c51;
   font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -233,19 +254,28 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .event-card {
+  position: relative;
+  isolation: isolate;
   display: grid;
   overflow: hidden;
-  border: 1px solid rgb(235 186 208 / 42%);
+  border: 1px solid #b62c51;
   border-radius: 0.35rem;
-  background: rgb(255 255 255 / 5%);
-  box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 18%);
+  color: #fffaf7;
+  background: #91375b;
+  box-shadow: 0 1.5rem 4rem rgb(127 41 77 / 15%);
+}
+
+.event-card__date,
+.event-card__details {
+  position: relative;
+  z-index: 1;
 }
 
 .event-card__date {
   display: grid;
   padding: var(--space-8) var(--space-6);
   color: var(--color-text);
-  background: var(--color-champagne);
+  background: #efb8ca;
   text-align: center;
   place-content: center;
 }
@@ -395,7 +425,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .event-card__button--primary {
-  color: var(--color-primary-dark);
+  color: #91375b;
   background: var(--color-champagne);
 }
 
