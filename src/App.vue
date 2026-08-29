@@ -9,7 +9,6 @@ import GuestbookSection from './components/GuestbookSection.vue'
 import MainSection from './components/MainSection.vue'
 import MusicPlayer from './components/MusicPlayer.vue'
 import Home from './components/Home.vue'
-import TentativeSection from './components/TentativeSection.vue'
 import { wedding } from './data/wedding'
 
 interface MusicPlayerInstance {
@@ -41,7 +40,6 @@ function openInvitation(): void {
         <MainSection />
         <Jemputan />
         <EventSection />
-        <TentativeSection />
         <CountdownSection />
         <GuestbookSection />
         <ContactSection />

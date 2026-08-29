@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { wedding } from '../data/wedding'
 import type { WeddingEvent } from '../types/wedding'
 
@@ -33,13 +33,36 @@ const venueName = computed(() => wedding.venue.name || 'Lokasi akan dikemas kini
 const hasDirections = computed(() =>
   Boolean(wedding.venue.googleMapsUrl || wedding.venue.wazeUrl),
 )
+
+const isTentativeOpen = ref(false)
+const activeTentativeId = ref(wedding.tentatives[0]?.id ?? '')
+
+const activeTentative = computed(() =>
+  wedding.tentatives.find((schedule) => schedule.id === activeTentativeId.value),
+)
+
+function openTentative(id?: string): void {
+  if (id) activeTentativeId.value = id
+  isTentativeOpen.value = true
+}
+
+function closeTentative(): void {
+  isTentativeOpen.value = false
+}
+
+function closeTentativeOnEscape(event: KeyboardEvent): void {
+  if (event.key === 'Escape') closeTentative()
+}
+
+onMounted(() => window.addEventListener('keydown', closeTentativeOnEscape))
+onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEscape))
 </script>
 
 <template>
   <section id="event" v-reveal class="event-section" aria-labelledby="event-heading">
     <div class="event-section__container">
       <header class="event-section__header">
-        <p class="event-section__eyebrow">Butiran Majlis</p>
+        <p class="event-section__eyebrow">Aturcara Majlis</p>
       </header>
 
       <article class="event-card">
@@ -51,6 +74,14 @@ const hasDirections = computed(() =>
 
         <div class="event-card__details">
           <p class="event-card__day-name">{{ dayName }}</p>
+          <button
+            id="tentative"
+            class="event-card__tentative-button"
+            type="button"
+            @click="openTentative()"
+          >
+            Lihat Tentatif
+          </button>
 
           <div class="event-card__events">
             <section
@@ -99,6 +130,67 @@ const hasDirections = computed(() =>
         </div>
       </article>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="isTentativeOpen"
+        class="tentative-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="tentative-modal-title"
+        @click.self="closeTentative"
+      >
+        <div class="tentative-modal__panel">
+        <button
+          class="tentative-modal__close"
+          type="button"
+          aria-label="Tutup tentatif"
+          @click="closeTentative"
+        >
+          &times;
+        </button>
+
+        <header class="tentative-modal__header">
+          <p>Atur Cara</p>
+          <h2 id="tentative-modal-title">Tentatif Majlis</h2>
+        </header>
+
+        <div class="tentative-modal__tabs" role="tablist" aria-label="Pilih tentatif majlis">
+          <button
+            v-for="schedule in wedding.tentatives"
+            :key="schedule.id"
+            class="tentative-modal__tab"
+            :class="{ 'tentative-modal__tab--active': activeTentativeId === schedule.id }"
+            type="button"
+            role="tab"
+            :aria-selected="activeTentativeId === schedule.id"
+            @click="activeTentativeId = schedule.id"
+          >
+            {{ schedule.title }}
+          </button>
+        </div>
+
+        <ol v-if="activeTentative" class="tentative-modal__timeline">
+          <li
+            v-for="(item, index) in activeTentative.items"
+            :key="`${item.time}-${item.title}`"
+            class="tentative-modal__item"
+          >
+            <span class="tentative-modal__number" aria-hidden="true">
+              {{ String(index + 1).padStart(2, '0') }}
+            </span>
+            <div>
+              <time class="tentative-modal__time">{{ item.time }}</time>
+              <h3>{{ item.title }}</h3>
+              <ul v-if="item.details?.length">
+                <li v-for="detail in item.details" :key="detail">{{ detail }}</li>
+              </ul>
+            </div>
+          </li>
+        </ol>
+        </div>
+      </div>
+    </Teleport>
   </section>
 </template>
 
@@ -253,6 +345,25 @@ const hasDirections = computed(() =>
   font-style: italic;
 }
 
+.event-card__tentative-button {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  margin-top: var(--space-1);
+  color: var(--color-champagne);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.event-card__tentative-button:focus-visible {
+  outline: 2px solid var(--color-champagne);
+  outline-offset: 4px;
+}
+
 .event-card__actions {
   display: flex;
   flex-wrap: wrap;
@@ -284,6 +395,151 @@ const hasDirections = computed(() =>
 .event-card__button:focus-visible {
   outline: 2px solid var(--color-champagne);
   outline-offset: 3px;
+}
+
+.tentative-modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  padding: 1rem;
+  background: rgb(37 20 28 / 72%);
+  place-items: center;
+}
+
+.tentative-modal__panel {
+  position: relative;
+  width: min(100%, 42rem);
+  max-height: min(88svh, 52rem);
+  padding: clamp(2.5rem, 7vw, 4rem) clamp(1.25rem, 5vw, 3rem);
+  overflow-y: auto;
+  border: 1px solid #b62c51;
+  border-radius: 1rem;
+  color: #493940;
+  background: #fad9df;
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 28%);
+}
+
+.tentative-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.85rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid #b62c51;
+  border-radius: 50%;
+  color: #b62c51;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.75rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.tentative-modal__header {
+  padding-inline: 2rem;
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+.tentative-modal__header p,
+.tentative-modal__header h2 {
+  margin: 0;
+}
+
+.tentative-modal__header p {
+  color: #b62c51;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.tentative-modal__header h2 {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 7vw, 2.4rem);
+  text-transform: uppercase;
+}
+
+.tentative-modal__tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid #b62c51;
+  border-radius: 999px;
+  margin-bottom: var(--space-8);
+}
+
+.tentative-modal__tab {
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.55rem;
+  border: 0;
+  border-radius: 999px;
+  color: #493940;
+  background: transparent;
+  cursor: pointer;
+  font-size: clamp(0.68rem, 2.8vw, 0.85rem);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tentative-modal__tab--active {
+  color: #fad9df;
+  background: #b62c51;
+}
+
+.tentative-modal__timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tentative-modal__item {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: var(--space-3);
+  padding-block: var(--space-4);
+  border-top: 1px solid rgb(182 44 81 / 28%);
+}
+
+.tentative-modal__number {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #b62c51;
+  border-radius: 50%;
+  color: #b62c51;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  place-items: center;
+}
+
+.tentative-modal__time {
+  color: #b62c51;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tentative-modal__item h3 {
+  margin: 0.3rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.tentative-modal__item ul {
+  padding-left: 1.1rem;
+  margin: var(--space-2) 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
 }
 
 .sr-only {

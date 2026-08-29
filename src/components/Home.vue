@@ -220,7 +220,6 @@ function openInvitation(): void {
   font-size: clamp(3.45rem, 17vw, 6.4rem);
   font-weight: 400;
   line-height: 0.72;
-  animation: names-float 4.8s 1.1s ease-in-out infinite;
 }
 
 .opening-cover__ampersand {
@@ -303,11 +302,6 @@ function openInvitation(): void {
 @keyframes floral-drift-right {
   0%, 100% { translate: 0 0; rotate: 0deg; }
   50% { translate: -0.32rem 0.5rem; rotate: -0.4deg; }
-}
-
-@keyframes names-float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -0.32rem; }
 }
 
 @keyframes button-breathe {

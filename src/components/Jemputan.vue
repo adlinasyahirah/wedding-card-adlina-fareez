@@ -43,17 +43,15 @@ import { wedding } from '../data/wedding'
           </div>
 
           <div class="couple-section__event">
-            <p class="couple-section__on">Pada</p>
             <p class="couple-section__date">
               <span>Sabtu</span>
-              <span class="couple-section__date-separator" aria-hidden="true"></span>
               <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
             </p>
             <p class="couple-section__hijri">{{ wedding.hijriDate }}</p>
           </div>
 
           <address class="couple-section__venue">
-            <span class="couple-section__venue-label">Bertempat di</span>
+            <span class="couple-section__venue-label">Lokasi Majlis</span>
             <strong>{{ wedding.venue.name }}</strong>
             <span>{{ wedding.venue.address }}</span>
           </address>
@@ -68,7 +66,7 @@ import { wedding } from '../data/wedding'
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: clamp(4.5rem, 10vw, 7rem) var(--space-4);
+  padding: 1rem var(--space-4);
   background:
     radial-gradient(circle at 10% 15%, rgb(235 186 208 / 22%), transparent 20rem),
     radial-gradient(circle at 90% 85%, rgb(189 63 112 / 12%), transparent 22rem),
@@ -83,17 +81,25 @@ import { wedding } from '../data/wedding'
 .couple-section__card {
   position: relative;
   padding: clamp(3rem, 8vw, 5rem) clamp(1.35rem, 7vw, 5rem);
-  border: 1px solid rgb(189 63 112 / 28%);
+  border: 1px solid #b62c51;
   border-radius: 0.35rem;
-  background:
-    radial-gradient(ellipse at 5% 8%, rgb(235 186 208 / 28%), transparent 28%),
-    radial-gradient(ellipse at 95% 92%, rgb(189 63 112 / 14%), transparent 30%),
-    radial-gradient(circle at 88% 18%, rgb(251 224 234 / 22%), transparent 20%),
-    linear-gradient(145deg, rgb(255 255 255 / 92%), rgb(251 244 238 / 78%));
-  box-shadow:
-    0 1.5rem 4rem rgb(127 41 77 / 8%),
-    inset 0 0 0 0.4rem rgb(255 255 255 / 55%),
-    inset 0 0 0 0.45rem rgb(189 63 112 / 10%);
+  background: #fad9df;
+  box-shadow: 0 1.5rem 4rem rgb(127 41 77 / 8%);
+}
+
+.couple-section__card::before {
+  position: absolute;
+  inset: clamp(0.55rem, 1.8vw, 0.85rem);
+  border: 3px dotted #b62c51;
+  border-radius: 0.18rem;
+  background: #fad9df;
+  content: '';
+  pointer-events: none;
+}
+
+.couple-section__card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .couple-section__header {
@@ -103,16 +109,17 @@ import { wedding } from '../data/wedding'
 
 .couple-section__greeting {
   margin: 0;
-  color: var(--color-text-muted);
+  color: #493940;
   font-family: var(--font-display);
-  font-size: clamp(1.08rem, 3vw, 1.3rem);
+  font-size: clamp(0.88rem, 3.9vw, 1.3rem);
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .couple-section__intro {
   margin: var(--space-2) 0 0;
-  color: var(--color-text-muted);
+  color: #493940;
   font-size: 0.9rem;
   line-height: 1.7;
 }
@@ -126,7 +133,7 @@ import { wedding } from '../data/wedding'
 .couple-section__hosts {
   display: grid;
   gap: 0.15rem;
-  color: var(--color-text-muted);
+  color: #493940;
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 3.5vw, 1.3rem);
   font-weight: 600;
@@ -136,7 +143,7 @@ import { wedding } from '../data/wedding'
 
 .couple-section__hosts-and {
   margin-block: 0.1rem;
-  color: var(--color-text-muted);
+  color: #493940;
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-style: italic;
@@ -159,13 +166,13 @@ import { wedding } from '../data/wedding'
   max-width: 37rem;
   margin-top: -0.5rem;
   margin-inline: auto;
-  color: var(--color-text-muted);
+  color: #493940;
   font-size: clamp(0.88rem, 2.6vw, 1rem);
   line-height: 1.7;
 }
 
 .couple-section__copy strong {
-  color: var(--color-text-muted);
+  color: #493940;
   font-weight: 900;
   letter-spacing: 0.02em;
 }
@@ -192,7 +199,7 @@ import { wedding } from '../data/wedding'
 .couple-section__couple p,
 .couple-section__on,
 .couple-section__hijri {
-  color: var(--color-text-muted);
+  color: #493940;
   font-style: italic;
 }
 
@@ -207,7 +214,7 @@ import { wedding } from '../data/wedding'
 
 .couple-section__event {
   display: grid;
-  gap: var(--space-3);
+  gap: 0.3rem;
 }
 
 .couple-section__on {
@@ -217,10 +224,10 @@ import { wedding } from '../data/wedding'
 
 .couple-section__date {
   display: grid;
-  gap: var(--space-1);
+  gap: 0.15rem;
   width: min(100%, 32rem);
   margin-inline: auto !important;
-  color: var(--color-text-muted);
+  color: #493940;
   font-family: var(--font-display);
   font-size: clamp(1rem, 4vw, 1.25rem);
   font-weight: 600;
@@ -234,7 +241,7 @@ import { wedding } from '../data/wedding'
 
 .couple-section__venue {
   display: grid;
-  gap: var(--space-2);
+  gap: 0.35rem;
   max-width: 34rem;
   padding: clamp(1.25rem, 4vw, 1.75rem);
   border: 1px solid rgb(189 63 112 / 20%);
@@ -246,31 +253,28 @@ import { wedding } from '../data/wedding'
 }
 
 .couple-section__venue-label {
-  color: var(--color-text-muted);
+  color: #493940;
   font-size: 0.84rem;
-  font-style: italic;
+  font-style: normal;
   letter-spacing: 0.12em;
 }
 
 .couple-section__venue strong {
-  color: var(--color-text-muted);
+  color: #493940;
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 4.5vw, 1.65rem);
+  font-size: clamp(0.9rem, 3.9vw, 1.65rem);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
 .couple-section__venue > span:last-child {
-  color: var(--color-text-muted);
+  color: #493940;
   font-size: 0.84rem;
 }
 
 @media (min-width: 48rem) {
-  .couple-section {
-    padding-block: 7rem;
-  }
-
   .couple-section__card {
     padding-inline: 5rem;
   }

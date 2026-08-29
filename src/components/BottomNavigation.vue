@@ -47,6 +47,10 @@ onBeforeUnmount(() => {
 
 function setActiveSection(id: string): void {
   activeSection.value = id
+
+  if (id === 'tentative') {
+    document.getElementById('tentative')?.click()
+  }
 }
 </script>
 

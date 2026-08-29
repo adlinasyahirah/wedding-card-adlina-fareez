@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { wedding } from '../data/wedding'
+import floralLeft from '../assets/images/opening-floral-left.webp'
 
 interface TimeRemaining {
   days: number
@@ -45,6 +46,13 @@ function formatNumber(value: number): string {
 
 <template>
   <section v-reveal class="countdown" aria-labelledby="countdown-title">
+    <img
+      class="countdown__floral"
+      :src="floralLeft"
+      alt=""
+      aria-hidden="true"
+    >
+
     <div class="countdown__container">
       <p class="countdown__eyebrow">Menghitung Hari</p>
       <h2 id="countdown-title" class="countdown__title">
@@ -96,34 +104,27 @@ function formatNumber(value: number): string {
   overflow: hidden;
   padding: var(--space-16) var(--space-4);
   color: var(--color-text);
-  background: var(--color-cream-100);
+  background: #f9d7dc;
 }
 
-.countdown::before,
-.countdown::after {
+.countdown__floral {
   position: absolute;
-  width: 8rem;
-  height: 8rem;
-  border: 1px solid rgb(189 63 112 / 20%);
-  border-radius: 50%;
-  content: '';
-}
-
-.countdown::before {
-  top: -5rem;
-  left: -4rem;
-}
-
-.countdown::after {
-  right: -4rem;
-  bottom: -5rem;
+  z-index: 1;
+  top: 4%;
+  left: -2%;
+  width: auto;
+  height: 94%;
+  object-fit: contain;
+  object-position: left center;
+  pointer-events: none;
 }
 
 .countdown__container {
   position: relative;
-  z-index: 1;
-  width: min(100%, 42rem);
-  margin-inline: auto;
+  z-index: 2;
+  width: min(76%, 42rem);
+  margin-right: 2%;
+  margin-left: auto;
   text-align: center;
 }
 
@@ -203,6 +204,29 @@ function formatNumber(value: number): string {
   font-size: 1.15rem;
   letter-spacing: 0.04em;
   text-transform: none;
+}
+
+@media (max-width: 30rem) {
+  .countdown__container {
+    width: 78%;
+    margin-right: 0.5rem;
+    margin-left: auto;
+  }
+
+  .countdown__floral {
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .countdown__eyebrow {
+    font-size: clamp(1.1rem, 5.2vw, 1.35rem);
+    letter-spacing: 0.18em;
+  }
+
+  .countdown__grid {
+    padding-inline: 0.5rem;
+  }
 }
 
 @media (min-width: 48rem) {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { wedding } from '../data/wedding'
+import childhoodPortraits from '../assets/images/Board Welcome Akad Nikah & Sanding 1.png'
+import floralRight from '../assets/images/opening-floral-right.webp'
 
 interface Props {
   backgroundImage?: string
@@ -31,15 +33,21 @@ const weddingDay = computed(() =>
     aria-labelledby="hero-title"
   >
     <div class="hero-section__overlay" aria-hidden="true"></div>
-
-    <div class="hero-section__botanical hero-section__botanical--top" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <img
+      class="hero-section__floral"
+      :src="floralRight"
+      alt=""
+      aria-hidden="true"
+    >
 
     <div class="hero-section__content">
       <p class="hero-section__eyebrow">{{ wedding.ceremonyTitle }}</p>
+
+      <img
+        class="hero-section__portraits"
+        :src="childhoodPortraits"
+        alt="Gambar zaman kanak-kanak Adlina dan Fareez"
+      >
 
       <h1 id="hero-title" class="hero-section__names">
         <span>{{ wedding.bride.name }}</span>
@@ -56,11 +64,6 @@ const weddingDay = computed(() =>
       </div>
     </div>
 
-    <div class="hero-section__botanical hero-section__botanical--bottom" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
   </section>
 </template>
 
@@ -74,10 +77,7 @@ const weddingDay = computed(() =>
   overflow: hidden;
   padding: clamp(5.75rem, 13vh, 8rem) clamp(3.5rem, 13vw, 5.5rem);
   color: var(--color-text);
-  background:
-    radial-gradient(circle at 5% 8%, rgb(235 186 208 / 36%), transparent 25%),
-    radial-gradient(circle at 95% 92%, rgb(189 63 112 / 18%), transparent 27%),
-    linear-gradient(165deg, var(--color-cream-50), var(--color-cream-100));
+  background: #f9d7dc;
   background-position: center;
   background-size: cover;
 }
@@ -103,10 +103,25 @@ const weddingDay = computed(() =>
   opacity: 1;
 }
 
+.hero-section__floral {
+  position: absolute;
+  z-index: 1;
+  top: 4%;
+  right: -2%;
+  width: auto;
+  height: 94%;
+  object-fit: contain;
+  object-position: right center;
+  pointer-events: none;
+}
+
 .hero-section__content {
+  position: relative;
+  z-index: 2;
   align-self: center;
-  width: min(100%, 48rem);
-  margin-inline: auto;
+  width: min(76%, 42rem);
+  margin-right: auto;
+  margin-left: 2%;
   text-align: center;
 }
 
@@ -121,24 +136,37 @@ const weddingDay = computed(() =>
   text-transform: uppercase;
 }
 
+.hero-section__portraits {
+  display: block;
+  width: clamp(20rem, 42vw, 34rem);
+  height: auto;
+  margin: clamp(-2.25rem, -3vh, -1rem) auto clamp(0.75rem, 2vh, 1.35rem);
+  filter: drop-shadow(0 0.75rem 1.1rem rgb(111 27 55 / 10%));
+  transform-origin: center;
+  animation: portraits-breathe 4.2s ease-in-out infinite;
+}
+
 .hero-section__names {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.6rem, 2vh, 1rem);
   margin: 0;
   color: var(--color-primary);
   font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
-  font-size: clamp(3.75rem, 18vw, 6.25rem);
+  font-size: clamp(2.85rem, 12vw, 7.25rem);
   font-weight: 400;
-  line-height: 0.78;
+  line-height: 0.9;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .hero-section__ampersand {
-  margin-block: var(--space-4);
+  margin-block: 0.1em;
   color: inherit;
   font-family: var(--font-display);
-  font-size: 0.42em;
+  font-size: 0.34em;
   line-height: 1;
 }
 
@@ -156,7 +184,7 @@ const weddingDay = computed(() =>
 
 .hero-section__details {
   margin-top: clamp(2.5rem, 7vh, 4rem);
-  font-size: clamp(0.72rem, 3vw, 0.88rem);
+  font-size: clamp(0.82rem, 3vw, 0.99rem);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -184,77 +212,74 @@ const weddingDay = computed(() =>
   text-transform: none;
 }
 
-.hero-section__botanical {
-  position: absolute;
-  z-index: -1;
-  width: 8rem;
-  height: 8rem;
-  color: var(--color-gold);
-  opacity: 0.22;
-  pointer-events: none;
+@keyframes portraits-breathe {
+  0%, 100% {
+    filter: drop-shadow(0 0.65rem 0.9rem rgb(111 27 55 / 8%));
+    transform: translateY(0) scale(0.985);
+  }
+
+  50% {
+    filter: drop-shadow(0 0.95rem 1.25rem rgb(111 27 55 / 16%));
+    transform: translateY(-0.3rem) scale(1.025);
+  }
 }
 
-.hero-section__botanical::before {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 100%;
-  background: currentColor;
-  content: '';
-  transform: rotate(38deg);
-  transform-origin: center;
+@media (prefers-reduced-motion: reduce) {
+  .hero-section__portraits {
+    animation: none;
+  }
 }
 
-.hero-section__botanical span {
-  position: absolute;
-  width: 2.25rem;
-  height: 1.1rem;
-  border: 1px solid currentColor;
-  border-radius: 100% 0 100% 0;
-}
+@media (max-width: 30rem) {
+  .hero-section {
+    min-height: calc(100svh - 1rem);
+    padding: clamp(4.5rem, 10vh, 5.75rem) 1.25rem clamp(7.5rem, 16vh, 9rem);
+  }
 
-.hero-section__botanical span:nth-child(1) {
-  top: 1.2rem;
-  left: 1.8rem;
-  transform: rotate(17deg);
-}
+  .hero-section__content {
+    width: 80%;
+    margin-right: auto;
+    margin-left: 0;
+  }
 
-.hero-section__botanical span:nth-child(2) {
-  top: 3.5rem;
-  left: 4.35rem;
-  transform: scaleX(-1) rotate(12deg);
-}
+  .hero-section__eyebrow {
+    margin-bottom: clamp(1.75rem, 5vh, 2.5rem);
+    font-size: clamp(1.15rem, 5.8vw, 1.4rem);
+    letter-spacing: 0.09em;
+  }
 
-.hero-section__botanical span:nth-child(3) {
-  top: 5.8rem;
-  left: 2.2rem;
-  transform: rotate(25deg);
-}
+  .hero-section__portraits {
+    width: min(100%, 21rem);
+    margin-top: -1rem;
+    margin-bottom: 1.25rem;
+  }
 
-.hero-section__botanical--top {
-  top: -1.5rem;
-  right: -1.5rem;
-}
+  .hero-section__names {
+    width: 100%;
+    gap: 0.45rem;
+    font-size: clamp(3.25rem, 16vw, 4rem);
+    letter-spacing: 0;
+  }
 
-.hero-section__botanical--bottom {
-  bottom: -1.5rem;
-  left: -1.5rem;
-  transform: rotate(180deg);
-}
+  .hero-section__details {
+    margin-top: clamp(2.25rem, 6vh, 3rem);
+  }
 
-.hero-section--with-image .hero-section__botanical {
-  color: var(--color-white);
+  .hero-section__details .hero-section__hashtag {
+    width: min(88%, 18rem);
+    font-size: 0.88rem;
+  }
+
+  .hero-section__floral {
+    top: 8%;
+    right: -18%;
+    height: 88%;
+  }
 }
 
 @media (min-width: 48rem) {
   .hero-section {
     padding-inline: clamp(6rem, 15vw, 14rem);
-  }
-
-  .hero-section__botanical {
-    width: 12rem;
-    height: 12rem;
   }
 }
 </style>

@@ -36,7 +36,7 @@ export const wedding: WeddingData = {
       date: "21 November 2026",
       dateTime: "2026-11-21T08:00:00+08:00",
       startTime: "8:00 pagi",
-      endTime: "10:00 pagi",
+      endTime: "10:30 pagi",
     },
     {
       title: "Majlis Bersanding",
@@ -183,7 +183,7 @@ export const wedding: WeddingData = {
       whatsappUrl: "https://wa.me/601112458285",
     },
     {
-      name: "Dee",
+      name: "Deeha",
       role: "Kakak",
       phone: "018 462 4356",
       whatsappUrl: "https://wa.me/60184624356",
