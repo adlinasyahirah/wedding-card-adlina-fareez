@@ -118,11 +118,11 @@ export const wedding: WeddingData = {
           title: "Perarakan Masuk Pengantin",
         },
         {
-          time: "12:25 TENGAH HARI",
+          time: "12:35 TENGAH HARI",
           title: "Bacaan Doa",
         },
         {
-          time: "12:35 TENGAH HARI",
+          time: "12:40 TENGAH HARI",
           title: "Salam Restu",
         },
         {
