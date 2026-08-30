@@ -3,20 +3,20 @@ import type { WeddingData } from '../types/wedding'
 export const wedding: WeddingData = {
   groom: {
     name: "Fareez",
-    fullName: "Mohammad Fareez Fahmi bin Mohd Fauzi",
+    fullName: "Mohammad Fareez Fahmi Bin Mohd Fauzi",
     photo: "",
     description: "",
   },
   bride: {
     name: "Adlina",
-    fullName: "Nur Adlina Syahirah binti Mustafa",
+    fullName: "Nur Adlina Syahirah Binti Mustafa",
     photo: "",
     description: "",
   },
   parents: {
     bride: {
-      father: "Mustafa bin Abu Bakar",
-      mother: "Dalina binti Mohamed Ariffin",
+      father: "Mustafa Bin Abu Bakar",
+      mother: "Dalina Binti Mohamed Ariffin",
     },
     groom: {
       father: "",
@@ -54,98 +54,97 @@ export const wedding: WeddingData = {
       items: [
         {
           time: "8:00 PAGI",
-          title: "Ketibaan keluarga & tetamu terdekat",
+          title: "Ketibaan Keluarga & Tetamu",
         },
         {
           time: "8:30 PAGI – 8:45 PAGI",
-          title: "Ketibaan jurunikah, wali & saksi",
+          title: "Ketibaan Jurunikah, Wali & Saksi",
           details: [
-            "Ketibaan & perarakan masuk Jurunikah, Wali & Saksi",
+            "Perarakan masuk Jurunikah, Wali & Saksi",
             "Perarakan masuk Pembawa Dulang Mas Kahwin & Hantaran",
             "Perarakan masuk Pengantin Lelaki",
-            "Perarakan masuk Pengantin Perempuan, diiringi oleh Ibu pengantin",
+            "Perarakan masuk Pengantin Perempuan diiringi Ibu",
           ],
         },
         {
-          time: "Anggaran 9:00 PAGI",
-          title: "Majlis Ijab & Qabul",
+          time: "ANGGARAN 9:00 PAGI",
+          title: "Upacara Akad Nikah",
           details: [
             "Khutbah Nikah",
             "Lafaz Ijab & Qabul",
-            "Doa",
-            "Bacaan Lafaz Taklik",
-            "Tandatangan Dokumen",
+            "Bacaan Doa",
+            "Lafaz Taklik",
+            "Tandatangan Dokumen Nikah",
           ],
         },
         {
           time: "9:30 PAGI",
-          title: "Majlis Ijab & Qabul selesai",
+          title: "Penyempurnaan Akad Nikah",
           details: [
             "Sesi Batal Air Sembahyang",
-            "Sesi Serahan Mas Kahwin",
-            "Sesi Serahan Cincin Kahwin",
+            "Penyerahan Mas Kahwin",
+            "Penyerahan Cincin",
           ],
         },
         {
           time: "9:40 PAGI",
-          title: "Sesi Salam Restu",
+          title: "Salam Restu",
         },
         {
           time: "9:45 PAGI",
-          title: "Sesi bergambar",
+          title: "Sesi Bergambar",
         },
         {
-          time: "10:00 PAGI",
+          time: "10:30 PAGI",
           title: "Jamuan Ringkas",
         },
       ],
     },
+
     {
       id: "bersanding",
       title: "Majlis Bersanding",
       items: [
         {
           time: "11:30 PAGI",
-          title: "Ketibaan Tetamu",
-          details: ["Majlis bermula"],
+          title: "Ketibaan Tetamu & Majlis Bermula",
         },
         {
-          time: "12:15 PETANG",
-          title: "Pengantin tiba di Dewan Puncak Arabella",
+          time: "12:25 TENGAH HARI",
+          title: "Ketibaan Pengantin",
         },
         {
-          time: "12:20 PETANG",
+          time: "12:30 TENGAH HARI",
           title: "Perarakan Masuk Pengantin",
         },
         {
-          time: "12:25 PETANG",
+          time: "12:25 TENGAH HARI",
           title: "Bacaan Doa",
         },
         {
-          time: "12:35 PETANG",
+          time: "12:35 TENGAH HARI",
           title: "Salam Restu",
         },
         {
-          time: "12:45 PETANG",
+          time: "12:45 TENGAH HARI",
           title: "Makan Beradab",
         },
         {
           time: "1:00 PETANG",
-          title: "Sesi Memotong Kek",
-        },
-        {
-          time: "1:10 PETANG",
           title: "Sesi Bergambar",
           details: [
-            "Kedua-dua keluarga",
-            "Keluarga pengantin perempuan",
-            "Keluarga pengantin lelaki",
-            "Tetamu jemputan",
+            "Keluarga Pengantin Perempuan",
+            "Keluarga Pengantin Lelaki",
+            "Saudara-mara & Tetamu",
           ],
         },
         {
+          time: "1:30 PETANG",
+          title: "Menyantuni Tetamu",
+        },
+        {
           time: "3:30 PETANG",
-          title: "Majlis tamat",
+          title: "Majlis Bersurai",
         },
       ],
     },

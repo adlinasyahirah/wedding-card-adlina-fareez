@@ -219,6 +219,15 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   text-transform: uppercase;
 }
 
+.couple-section__couple h3 {
+  font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
+  font-size: clamp(1.45rem, 6vw, 2rem);
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
 .couple-section__couple p,
 .couple-section__on,
 .couple-section__hijri {
@@ -295,6 +304,81 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 .couple-section__venue > span:last-child {
   color: #493940;
   font-size: 0.84rem;
+}
+
+@media (max-width: 22.5rem) {
+  .couple-section {
+    padding-inline: 0.75rem;
+  }
+
+  .couple-section__card {
+    padding-inline: 1.15rem;
+  }
+
+  .couple-section__greeting {
+    font-size: 0.72rem;
+    white-space: normal;
+  }
+
+  .couple-section__intro {
+    font-size: 0.74rem;
+  }
+
+  .couple-section__hosts {
+    font-size: 0.82rem;
+    letter-spacing: 0.015em;
+  }
+
+  .couple-section__copy {
+    font-size: 0.72rem;
+    line-height: 1.6;
+  }
+
+  .couple-section__copy strong {
+    font-size: 0.7rem;
+    letter-spacing: 0;
+  }
+
+  .couple-section__couple h3 {
+    font-size: 1.15rem;
+    line-height: 1.35;
+  }
+
+  .couple-section__couple p,
+  .couple-section__hijri {
+    font-size: 0.72rem;
+  }
+
+  .couple-section__date {
+    font-size: 0.88rem;
+    letter-spacing: 0.07em;
+  }
+
+  .couple-section__venue {
+    padding: 1rem;
+    font-size: 0.74rem;
+  }
+
+  .couple-section__venue-label,
+  .couple-section__venue > span:last-child {
+    font-size: 0.72rem;
+  }
+
+  .couple-section__venue strong {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    white-space: normal;
+  }
+
+  .couple-section__header,
+  .couple-section__hosts,
+  .couple-section__copy,
+  .couple-section__couple,
+  .couple-section__event,
+  .couple-section__venue {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 }
 
 @media (min-width: 48rem) {

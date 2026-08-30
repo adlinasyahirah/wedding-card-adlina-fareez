@@ -140,11 +140,11 @@ async function submitMessage(): Promise<void> {
               v-model="message"
               name="message"
               rows="5"
-              maxlength="500"
+              maxlength="300"
               placeholder="Tuliskan doa dan ucapan anda..."
               required
             ></textarea>
-            <span class="guestbook-form__count">{{ message.length }}/500</span>
+            <span class="guestbook-form__count">{{ message.length }}/300</span>
           </div>
 
           <button class="guestbook-form__button" type="submit" :disabled="!canSubmit">

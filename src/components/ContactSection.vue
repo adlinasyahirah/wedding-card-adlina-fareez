@@ -27,7 +27,8 @@ function toggleContact(phone: string): void {
       <header class="contact-section__header">
         <p id="contact-heading" class="contact-section__eyebrow">Hubungi</p>
         <p class="contact-section__intro">
-            Sebarang pertanyaan berkaitan majlis, hubungi
+          Sebarang pertanyaan berkaitan majlis,<br>
+          hubungi
         </p>
       </header>
 
@@ -49,7 +50,7 @@ function toggleContact(phone: string): void {
             </span>
             <span class="contact-card__indicator" aria-hidden="true">
               <svg viewBox="0 0 24 24">
-                <path d="M7.1 3.5 9.5 8l-2.1 1.7a15.2 15.2 0 0 0 6.9 6.9l1.7-2.1 4.5 2.4-1.1 3a2 2 0 0 1-2.2 1.3C9.8 20 4 14.2 2.8 6.8a2 2 0 0 1 1.3-2.2z" />
+                <path d="m7 9 5 5 5-5" />
               </svg>
             </span>
           </button>
@@ -150,16 +151,22 @@ function toggleContact(phone: string): void {
 
 .contact-section__grid {
   display: grid;
+  width: calc(100% - 2.5rem);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: var(--space-6);
   row-gap: var(--space-2);
   align-items: start;
+  transform: translateX(-1.25rem);
 }
 
 .contact-card {
   min-width: 0;
   border-bottom: 1px solid rgb(182 44 81 / 34%);
   color: #493940;
+}
+
+.contact-card:nth-child(odd) {
+  transform: translateX(1rem);
 }
 
 .contact-card__summary {
@@ -192,8 +199,8 @@ function toggleContact(phone: string): void {
   color: #b62c51;
   font-family: var(--font-display);
   overflow: hidden;
-  font-size: clamp(0.88rem, 3.8vw, 1.1rem);
-  letter-spacing: 0.04em;
+  font-size: clamp(0.78rem, 3.2vw, 0.95rem);
+  letter-spacing: 0.02em;
   text-overflow: ellipsis;
   text-transform: uppercase;
   white-space: nowrap;
@@ -226,11 +233,16 @@ function toggleContact(phone: string): void {
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: transform 180ms ease;
 }
 
 .contact-card__summary[aria-expanded='true'] .contact-card__indicator {
   color: #fad9df;
   background: #b62c51;
+}
+
+.contact-card__summary[aria-expanded='true'] .contact-card__indicator svg {
+  transform: rotate(180deg);
 }
 
 .contact-card__summary:focus-visible {

@@ -198,6 +198,10 @@ function formatNumber(value: number): string {
   text-transform: uppercase;
 }
 
+.countdown__date {
+  white-space: nowrap;
+}
+
 .countdown__message {
   color: var(--color-gold);
   font-family: var(--font-display);
@@ -211,6 +215,7 @@ function formatNumber(value: number): string {
     width: 78%;
     margin-right: 0.5rem;
     margin-left: auto;
+    transform: translateX(clamp(0.5rem, 2.5vw, 0.85rem));
   }
 
   .countdown__floral {
@@ -226,6 +231,11 @@ function formatNumber(value: number): string {
 
   .countdown__grid {
     padding-inline: 0.5rem;
+  }
+
+  .countdown__date {
+    font-size: clamp(1.05rem, 6vw, 1.65rem);
+    letter-spacing: clamp(0.08em, 0.8vw, 0.16em);
   }
 }
 

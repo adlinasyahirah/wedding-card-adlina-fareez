@@ -2,7 +2,9 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { wedding } from '../data/wedding'
 import type { WeddingEvent } from '../types/wedding'
+import floralLeft from '../assets/images/opening-floral-left.webp'
 import floralRight from '../assets/images/opening-floral-right.webp'
+import strawberry from '../assets/images/strawberry.png'
 
 const eventDate = computed(() => new Date(wedding.events[0]?.dateTime ?? wedding.dateTime))
 
@@ -83,7 +85,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
           <p class="event-card__day-name">{{ dayName }}</p>
           <button
             id="tentative"
-            class="event-card__tentative-button"
+            class="event-card__button event-card__button--primary event-card__tentative-button"
             type="button"
             @click="openTentative()"
           >
@@ -148,18 +150,22 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
         @click.self="closeTentative"
       >
         <div class="tentative-modal__panel">
-        <button
-          class="tentative-modal__close"
-          type="button"
-          aria-label="Tutup tentatif"
-          @click="closeTentative"
+        <img
+          class="tentative-modal__floral"
+          :src="floralLeft"
+          alt=""
+          aria-hidden="true"
         >
-          &times;
-        </button>
-
         <header class="tentative-modal__header">
-          <p>Atur Cara</p>
-          <h2 id="tentative-modal-title">Tentatif Majlis</h2>
+          <p id="tentative-modal-title">Tentatif Majlis</p>
+          <button
+            class="tentative-modal__close"
+            type="button"
+            aria-label="Tutup tentatif"
+            @click="closeTentative"
+          >
+            &times;
+          </button>
         </header>
 
         <div class="tentative-modal__tabs" role="tablist" aria-label="Pilih tentatif majlis">
@@ -179,13 +185,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
         <ol v-if="activeTentative" class="tentative-modal__timeline">
           <li
-            v-for="(item, index) in activeTentative.items"
+            v-for="item in activeTentative.items"
             :key="`${item.time}-${item.title}`"
             class="tentative-modal__item"
           >
-            <span class="tentative-modal__number" aria-hidden="true">
-              {{ String(index + 1).padStart(2, '0') }}
-            </span>
+            <img class="tentative-modal__strawberry" :src="strawberry" alt="" aria-hidden="true">
             <div>
               <time class="tentative-modal__time">{{ item.time }}</time>
               <h3>{{ item.title }}</h3>
@@ -258,7 +262,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   isolation: isolate;
   display: grid;
   overflow: hidden;
-  border: 1px solid #b62c51;
+  border: 1px solid rgb(182 44 81 / 22%);
   border-radius: 0.35rem;
   color: #fffaf7;
   background: #91375b;
@@ -326,7 +330,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .event-card__events {
   display: grid;
-  gap: var(--space-8);
+  gap: 1.25rem;
   margin: var(--space-8) 0 0;
 }
 
@@ -357,7 +361,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .event-card__location {
-  margin-top: var(--space-8);
+  margin-top: 1rem;
 }
 
 .event-card__location .event-card__label {
@@ -383,17 +387,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .event-card__tentative-button {
-  display: inline-block;
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  margin-top: var(--space-1);
-  color: var(--color-champagne);
   background: transparent;
   cursor: pointer;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
+  margin-top: var(--space-4);
 }
 
 .event-card__tentative-button:focus-visible {
@@ -439,65 +435,103 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   z-index: 100;
   inset: 0;
   display: grid;
-  padding: 1rem;
-  background: rgb(37 20 28 / 72%);
+  padding: 1.5rem;
+  background: rgb(55 30 39 / 58%);
+  backdrop-filter: blur(0.55rem);
+  -webkit-backdrop-filter: blur(0.55rem);
   place-items: center;
 }
 
 .tentative-modal__panel {
   position: relative;
-  width: min(100%, 42rem);
+  isolation: isolate;
+  width: min(100%, 27rem);
   max-height: min(88svh, 52rem);
-  padding: clamp(2.5rem, 7vw, 4rem) clamp(1.25rem, 5vw, 3rem);
+  padding: 0.9rem clamp(1rem, 5vw, 2rem) 2.25rem;
   overflow-y: auto;
-  border: 1px solid #b62c51;
-  border-radius: 1rem;
+  border: 1px solid rgb(182 44 81 / 32%);
+  border-radius: 1.5rem;
   color: #493940;
-  background: #fad9df;
-  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 28%);
+  background: #fffaf7;
+  box-shadow: 0 1.5rem 4rem rgb(45 19 28 / 28%);
+}
+
+.tentative-modal__panel > :not(.tentative-modal__floral):not(.tentative-modal__close) {
+  position: relative;
+  z-index: 1;
+}
+
+.tentative-modal__floral {
+  position: absolute;
+  z-index: 0;
+  top: 8rem;
+  left: -1.75rem;
+  width: 8rem;
+  height: auto;
+  opacity: 0.12;
+  pointer-events: none;
 }
 
 .tentative-modal__close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.85rem;
   display: grid;
   width: 2.5rem;
-  height: 2.5rem;
+  min-height: 2.5rem;
+  grid-column: 3;
+  grid-row: 1;
   padding: 0;
   border: 1px solid #b62c51;
   border-radius: 50%;
   color: #b62c51;
   background: transparent;
   cursor: pointer;
-  font-size: 1.75rem;
+  font-size: 1.55rem;
+  font-weight: 300;
   line-height: 1;
   place-items: center;
 }
 
 .tentative-modal__header {
-  padding-inline: 2rem;
-  margin-bottom: var(--space-6);
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  align-items: center;
+  margin-bottom: 0.67rem;
   text-align: center;
 }
 
-.tentative-modal__header p,
-.tentative-modal__header h2 {
+.tentative-modal__header p {
   margin: 0;
 }
 
 .tentative-modal__header p {
+  grid-column: 2;
+  grid-row: 1;
   color: #b62c51;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 4.7vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: clamp(0.04em, 0.8vw, 0.1em);
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
-.tentative-modal__header h2 {
-  margin-top: var(--space-2);
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 7vw, 2.4rem);
-  text-transform: uppercase;
+@media (max-width: 22rem) {
+  .tentative-modal__header {
+    grid-template-columns: 2.15rem minmax(0, 1fr) 2.15rem;
+    gap: 0.2rem;
+  }
+
+  .tentative-modal__close {
+    width: 2.15rem;
+    min-height: 2.15rem;
+    font-size: 1.3rem;
+  }
+
+  .tentative-modal__header p {
+    font-size: clamp(0.82rem, 4.5vw, 0.95rem);
+    letter-spacing: 0.035em;
+  }
 }
 
 .tentative-modal__tabs {
@@ -507,7 +541,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   padding: 0.25rem;
   border: 1px solid #b62c51;
   border-radius: 999px;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
 .tentative-modal__tab {
@@ -525,7 +559,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .tentative-modal__tab--active {
-  color: #fad9df;
+  color: #fffaf7;
   background: #b62c51;
 }
 
@@ -537,28 +571,22 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .tentative-modal__item {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr);
-  gap: var(--space-3);
-  padding-block: var(--space-4);
-  border-top: 1px solid rgb(182 44 81 / 28%);
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  border-top: 1px solid rgb(182 44 81 / 22%);
 }
 
-.tentative-modal__number {
-  display: grid;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid #b62c51;
-  border-radius: 50%;
-  color: #b62c51;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  place-items: center;
+.tentative-modal__strawberry {
+  width: 2.1rem;
+  height: 2.1rem;
+  margin-top: 0.1rem;
+  object-fit: contain;
 }
 
 .tentative-modal__time {
   color: #b62c51;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -566,17 +594,18 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .tentative-modal__item h3 {
-  margin: 0.3rem 0 0;
-  font-size: 0.95rem;
+  margin: 0.2rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-weight: 600;
   line-height: 1.4;
-  text-transform: uppercase;
 }
 
 .tentative-modal__item ul {
   padding-left: 1.1rem;
-  margin: var(--space-2) 0 0;
-  font-size: 0.85rem;
-  line-height: 1.55;
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
 }
 
 .sr-only {
