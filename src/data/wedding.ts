@@ -44,7 +44,7 @@ export const wedding: WeddingData = {
       dateTime: "2026-11-21T11:30:00+08:00",
       startTime: "11:30 pagi",
       endTime: "3:30 petang",
-      note: "Ketibaan pengantin pada 12:15 tengah hari",
+      note: "Ketibaan pengantin pada 12:30 tengah hari",
     },
   ],
   tentatives: [
