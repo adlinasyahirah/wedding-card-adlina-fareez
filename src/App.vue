@@ -17,6 +17,7 @@ interface MusicPlayerInstance {
 }
 
 const isInvitationOpen = ref(false)
+const bottomNavigation = ref<InstanceType<typeof BottomNavigation> | null>(null)
 const musicPlayer = ref<MusicPlayerInstance | null>(null)
 
 function openInvitation(): void {
@@ -39,11 +40,13 @@ function openInvitation(): void {
       <div v-else key="invitation" class="invitation-content">
         <MainSection />
         <Jemputan />
-        <EventSection />
+        <EventSection @open-busana="bottomNavigation?.openTheme()" />
         <CountdownSection />
-        <GuestbookSection />
-        <ContactSection />
-        <BottomNavigation />
+        <div class="guestbook-contact-background">
+          <GuestbookSection />
+          <ContactSection />
+        </div>
+        <BottomNavigation ref="bottomNavigation" />
       </div>
     </Transition>
   </main>
@@ -51,6 +54,17 @@ function openInvitation(): void {
 
 <style scoped>
 .invitation-content { overflow: clip; }
+
+.guestbook-contact-background {
+  background-color: #d4c7b4;
+  background-image:
+    linear-gradient(to bottom, #d4c7b4, transparent clamp(7rem, 16vh, 10rem)),
+    linear-gradient(rgb(27 22 17 / 38%), rgb(27 22 17 / 38%)),
+    url('./assets/images/background.jpeg');
+  background-position: center top;
+  background-size: 100% 100%, 100% 100%, 100% auto;
+  background-repeat: no-repeat, no-repeat, repeat-y;
+}
 
 .invitation-enter-active {
   transition: opacity 720ms ease, transform 850ms cubic-bezier(.2,.75,.2,1), filter 720ms ease;

@@ -45,7 +45,7 @@ function formatNumber(value: number): string {
 </script>
 
 <template>
-  <section v-reveal class="countdown" aria-labelledby="countdown-title">
+  <section class="countdown" aria-labelledby="countdown-title">
     <img
       class="countdown__floral"
       :src="floralLeft"
@@ -53,12 +53,15 @@ function formatNumber(value: number): string {
       aria-hidden="true"
     >
 
-    <div class="countdown__container">
-      <p class="countdown__eyebrow">Menghitung Hari</p>
-      <h2 id="countdown-title" class="countdown__title">
-        Menuju Hari Bahagia
-      </h2>
-
+    <div v-reveal class="countdown__container">
+      <div class="countdown__letter">
+        <header class="countdown__letter-heading">
+          <p class="countdown__eyebrow">Menghitung Hari</p>
+          <h2 id="countdown-title" class="countdown__title">
+            Menuju Hari Bahagia
+          </h2>
+        </header>
+        <div class="countdown__letter-content">
       <p v-if="hasStarted" class="countdown__message" role="status">
         Hari yang dinantikan telah tiba.
       </p>
@@ -94,6 +97,8 @@ function formatNumber(value: number): string {
       <p class="countdown__date">
         <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
       </p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -102,9 +107,9 @@ function formatNumber(value: number): string {
 .countdown {
   position: relative;
   overflow: hidden;
-  padding: var(--space-16) var(--space-4);
-  color: var(--color-text);
-  background: #f9d7dc;
+  padding: 0 var(--space-4) clamp(3rem, 8vw, 5rem);
+  color: #493940;
+  background: #d4c7b4;
 }
 
 .countdown__floral {
@@ -122,40 +127,65 @@ function formatNumber(value: number): string {
 .countdown__container {
   position: relative;
   z-index: 2;
-  width: min(76%, 42rem);
-  margin-right: 2%;
-  margin-left: auto;
+  width: min(100%, 48rem);
+  margin-inline: auto;
   text-align: center;
 }
 
+.countdown__letter-heading {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  width: 58%;
+  color: #fff;
+  transform: rotate(-11deg);
+}
+
 .countdown__eyebrow {
-  margin: 0 0 var(--space-3);
-  color: var(--color-gold);
-  font-size: 1.81rem;
+  margin: 0 0 1.5cqw;
+  color: #fff;
+  font-size: 3.5cqw;
   font-weight: 600;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .countdown__title {
   margin: 0;
-  color: var(--color-primary);
   font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
-  font-size: clamp(1.75rem, 6vw, 2.15rem);
+  font-size: 4.6cqw;
   font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+.countdown__letter {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 1238 / 978;
+  margin-top: 0;
+  transform: translate(1.81rem, 1rem);
+  background: url('../assets/images/letter.png') center / contain no-repeat;
+  filter: drop-shadow(0 0.8rem 0.8rem rgb(65 43 35 / 18%));
+}
+
+/* Keep the details inside the cream paper and below the wax seal. */
+.countdown__letter-content {
+  position: absolute;
+  inset: 58% 18% 15% 31%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3cqw;
 }
 
 .countdown__grid {
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   align-items: start;
-  margin-top: var(--space-12);
-  padding: clamp(1.5rem, 6vw, 2.5rem) clamp(0.75rem, 4vw, 2rem);
-  border: 1px solid rgb(189 63 112 / 24%);
-  border-radius: 0.35rem;
-  background: rgb(255 255 255 / 42%);
+  gap: 0.4cqw;
 }
 
 .countdown__item {
@@ -167,85 +197,44 @@ function formatNumber(value: number): string {
 
 .countdown__value {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 9.5vw, 3.75rem);
+  font-size: 7.5cqw;
   font-variant-numeric: tabular-nums;
   font-weight: 400;
   line-height: 1;
 }
 
 .countdown__label {
-  margin-top: var(--space-3);
-  color: var(--color-text-muted);
-  font-size: clamp(0.58rem, 2.5vw, 0.72rem);
-  letter-spacing: 0.12em;
+  margin-top: 1.5cqw;
+  font-size: 2cqw;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .countdown__separator {
-  padding-top: 0.15rem;
-  color: var(--color-gold);
-  font-size: clamp(1.5rem, 7vw, 3rem);
+  font-size: 6cqw;
   font-weight: 300;
   line-height: 1;
 }
 
-.countdown__date,
-.countdown__message {
-  margin: var(--space-8) 0 0;
-  color: var(--color-text-muted);
-  font-size: 1.81rem;
-  letter-spacing: 0.16em;
+.countdown__date {
+  margin: 0;
+  font-size: 2.7cqw;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
-.countdown__date {
-  white-space: nowrap;
-}
-
 .countdown__message {
-  color: var(--color-gold);
+  margin: 0;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
-  text-transform: none;
+  font-size: 3.8cqw;
+  line-height: 1.4;
 }
-
 @media (max-width: 30rem) {
-  .countdown__container {
-    width: 78%;
-    margin-right: 0.5rem;
-    margin-left: auto;
-    transform: translateX(clamp(0.5rem, 2.5vw, 0.85rem));
-  }
-
   .countdown__floral {
     top: 0;
     left: 0;
     height: 100%;
-  }
-
-  .countdown__eyebrow {
-    font-size: clamp(1.1rem, 5.2vw, 1.35rem);
-    letter-spacing: 0.18em;
-  }
-
-  .countdown__grid {
-    padding-inline: 0.5rem;
-  }
-
-  .countdown__date {
-    font-size: clamp(1.05rem, 6vw, 1.65rem);
-    letter-spacing: clamp(0.08em, 0.8vw, 0.16em);
-  }
-}
-
-@media (min-width: 48rem) {
-  .countdown {
-    padding-block: 6rem;
-  }
-
-  .countdown__grid {
-    margin-top: var(--space-16);
   }
 }
 </style>

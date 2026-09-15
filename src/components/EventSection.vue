@@ -4,7 +4,8 @@ import { wedding } from '../data/wedding'
 import type { WeddingEvent } from '../types/wedding'
 import floralLeft from '../assets/images/opening-floral-left.webp'
 import floralRight from '../assets/images/opening-floral-right.webp'
-import strawberry from '../assets/images/strawberry.png'
+
+const emit = defineEmits<{ openBusana: [] }>()
 
 const eventDate = computed(() => new Date(wedding.events[0]?.dateTime ?? wedding.dateTime))
 
@@ -62,8 +63,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 </script>
 
 <template>
-  <section id="event" v-reveal class="event-section" aria-labelledby="event-heading">
-    <div class="event-section__container">
+  <section id="event" class="event-section" aria-labelledby="event-heading">
+    <div v-reveal class="event-section__container">
       <header class="event-section__header">
         <p class="event-section__eyebrow">Aturcara Majlis</p>
       </header>
@@ -83,6 +84,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
         <div class="event-card__details">
           <p class="event-card__day-name">{{ dayName }}</p>
+          <div class="event-card__schedule-actions">
           <button
             id="tentative"
             class="event-card__button event-card__button--primary event-card__tentative-button"
@@ -91,6 +93,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
           >
             Lihat Tentatif
           </button>
+          <button
+            class="event-card__button event-card__button--primary event-card__tentative-button"
+            type="button"
+            @click="emit('openBusana')"
+          >
+            Busana
+          </button>
+          </div>
 
           <div class="event-card__events">
             <section
@@ -189,9 +199,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
             :key="`${item.time}-${item.title}`"
             class="tentative-modal__item"
           >
-            <img class="tentative-modal__strawberry" :src="strawberry" alt="" aria-hidden="true">
-            <div>
-              <time class="tentative-modal__time">{{ item.time }}</time>
+            <time class="tentative-modal__time">{{ item.time }}</time>
+            <div class="tentative-modal__description">
               <h3>{{ item.title }}</h3>
               <ul v-if="item.details?.length">
                 <li v-for="detail in item.details" :key="detail">{{ detail }}</li>
@@ -209,11 +218,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 .event-section {
   position: relative;
   overflow: hidden;
-  padding: 5rem var(--space-4);
+  padding: 5rem var(--space-4) 1rem;
   color: #493940;
-  background:
-    radial-gradient(circle at 10% 10%, rgb(255 255 255 / 24%), transparent 24rem),
-    #fad9df;
+  background: #d4c7b4;
 }
 
 .event-card__watermark {
@@ -243,7 +250,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .event-section__eyebrow {
   margin: 0 0 var(--space-3);
-  color: #b62c51;
+  color: #fff;
+  text-shadow: 0 2px 5px rgb(73 57 40 / 20%);
   font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -262,11 +270,11 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   isolation: isolate;
   display: grid;
   overflow: hidden;
-  border: 1px solid rgb(182 44 81 / 22%);
+  border: 1px solid #fff;
   border-radius: 0.35rem;
   color: #fffaf7;
-  background: #91375b;
-  box-shadow: 0 1.5rem 4rem rgb(127 41 77 / 15%);
+  background: #756653;
+  box-shadow: none;
 }
 
 .event-card__date,
@@ -279,7 +287,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   display: grid;
   padding: var(--space-8) var(--space-6);
   color: var(--color-text);
-  background: #efb8ca;
+  background: #e9e2d9;
   text-align: center;
   place-content: center;
 }
@@ -313,7 +321,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .event-card__day-name {
   margin: 0 0 var(--space-2);
-  color: var(--color-champagne);
+  color: #fff;
   font-size: 0.98rem;
   font-weight: 600;
   letter-spacing: 0.24em;
@@ -337,12 +345,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 .event-card__event,
 .event-card__location {
   padding-top: var(--space-4);
-  border-top: 1px solid rgb(235 186 208 / 25%);
+  border-top: 1px solid rgb(255 255 255 / 65%);
 }
 
 .event-card__label {
   margin-bottom: var(--space-2);
-  color: var(--color-champagne);
+  color: #fff;
   font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -381,7 +389,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 .event-card__note {
   margin-top: var(--space-2) !important;
-  color: var(--color-champagne);
+  color: #fff;
   font-size: 0.82rem !important;
   font-style: italic;
 }
@@ -392,8 +400,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   margin-top: var(--space-4);
 }
 
+.event-card__schedule-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-3);
+}
+
 .event-card__tentative-button:focus-visible {
-  outline: 2px solid var(--color-champagne);
+  outline: 2px solid #fff;
   outline-offset: 4px;
 }
 
@@ -410,9 +424,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   align-items: center;
   justify-content: center;
   padding: 0.65rem 1.1rem;
-  border: 1px solid var(--color-champagne);
+  border: 1px solid #fff;
   border-radius: 999px;
-  color: var(--color-champagne);
+  color: #fff;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -421,12 +435,12 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .event-card__button--primary {
-  color: #91375b;
-  background: var(--color-champagne);
+  color: #fff;
+  background: #645542;
 }
 
 .event-card__button:focus-visible {
-  outline: 2px solid var(--color-champagne);
+  outline: 2px solid #fff;
   outline-offset: 3px;
 }
 
@@ -436,7 +450,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   inset: 0;
   display: grid;
   padding: 1.5rem;
-  background: rgb(55 30 39 / 58%);
+  background: rgb(24 21 17 / 70%);
   backdrop-filter: blur(0.55rem);
   -webkit-backdrop-filter: blur(0.55rem);
   place-items: center;
@@ -447,12 +461,16 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   isolation: isolate;
   width: min(100%, 27rem);
   max-height: min(88svh, 52rem);
-  padding: 0.9rem clamp(1rem, 5vw, 2rem) 2.25rem;
+  padding: 1.25rem clamp(1rem, 5vw, 2rem) 2.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 40%) transparent;
   overflow-y: auto;
-  border: 1px solid rgb(182 44 81 / 32%);
+  border: 1px solid rgb(255 255 255 / 65%);
   border-radius: 1.5rem;
-  color: #493940;
-  background: #fffaf7;
+  color: #fff;
+  background:
+    linear-gradient(rgb(27 22 17 / 60%), rgb(27 22 17 / 76%)),
+    url('../assets/images/background.jpeg') center / cover no-repeat;
   box-shadow: 0 1.5rem 4rem rgb(45 19 28 / 28%);
 }
 
@@ -479,9 +497,9 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   grid-column: 3;
   grid-row: 1;
   padding: 0;
-  border: 1px solid #b62c51;
+  border: 1px solid #fff;
   border-radius: 50%;
-  color: #b62c51;
+  color: #fff;
   background: transparent;
   cursor: pointer;
   font-size: 1.55rem;
@@ -496,18 +514,19 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   gap: 0.35rem;
   min-height: 2.5rem;
   align-items: center;
-  margin-bottom: 0.67rem;
+  margin-bottom: 1.25rem;
   text-align: center;
 }
 
 .tentative-modal__header p {
   margin: 0;
+  transform: translateX(-1.5rem);
 }
 
 .tentative-modal__header p {
   grid-column: 2;
   grid-row: 1;
-  color: #b62c51;
+  color: #fff;
   font-family: var(--font-display);
   font-size: clamp(0.95rem, 4.7vw, 1.25rem);
   font-weight: 600;
@@ -539,7 +558,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.25rem;
   padding: 0.25rem;
-  border: 1px solid #b62c51;
+  border: 1px solid #fff;
   border-radius: 999px;
   margin-bottom: var(--space-6);
 }
@@ -550,7 +569,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
   padding: 0.55rem;
   border: 0;
   border-radius: 999px;
-  color: #493940;
+  color: #fff;
   background: transparent;
   cursor: pointer;
   font-size: clamp(0.68rem, 2.8vw, 0.85rem);
@@ -559,53 +578,89 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 }
 
 .tentative-modal__tab--active {
-  color: #fffaf7;
-  background: #b62c51;
+  color: #fff;
+  background: rgb(255 255 255 / 22%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 70%);
+}
+
+.tentative-modal__tab:hover,
+.tentative-modal__close:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+.tentative-modal__tab:focus-visible,
+.tentative-modal__close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 .tentative-modal__timeline {
-  margin: 0;
+  position: relative;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
 }
 
-.tentative-modal__item {
-  display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr);
-  gap: var(--space-2);
-  padding-block: var(--space-3);
-  border-top: 1px solid rgb(182 44 81 / 22%);
+.tentative-modal__timeline::before {
+  position: absolute;
+  top: 0;
+  bottom: 1rem;
+  left: 0.25rem;
+  width: 1px;
+  background: #fff;
+  content: '';
 }
 
-.tentative-modal__strawberry {
-  width: 2.1rem;
-  height: 2.1rem;
-  margin-top: 0.1rem;
-  object-fit: contain;
+.tentative-modal__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  gap: 0.85rem;
+  min-height: 6rem;
+  padding: 0.5rem 0 1.75rem 1rem;
+}
+
+.tentative-modal__item::before {
+  position: absolute;
+  top: 1.2rem;
+  left: calc(0.25rem - 4px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  content: '';
 }
 
 .tentative-modal__time {
-  color: #b62c51;
+  justify-self: center;
+  align-self: start;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: #fff;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: none;
 }
 
 .tentative-modal__item h3 {
-  margin: 0.2rem 0 0;
-  font-family: var(--font-body);
-  font-size: 0.86rem;
+  margin: 0;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgb(255 255 255 / 45%);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
   font-weight: 600;
   line-height: 1.4;
 }
 
 .tentative-modal__item ul {
-  padding-left: 1.1rem;
-  margin: 0.35rem 0 0;
-  font-size: 0.82rem;
-  line-height: 1.5;
+  padding-left: 1rem;
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
 }
 
 .sr-only {
@@ -621,7 +676,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeTentativeOnEsca
 
 @media (min-width: 48rem) {
   .event-section {
-    padding-block: 7rem;
+    padding-block: 7rem 1rem;
   }
 
   .event-section__header {

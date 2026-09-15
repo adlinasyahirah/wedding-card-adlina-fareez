@@ -61,16 +61,17 @@ function openInvitation(): void {
             <span>{{ wedding.groom.name }}</span>
           </h1>
 
+        </div>
+
           <div class="opening-cover__details">
             <p>{{ weddingDay }}</p>
             <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-            <p v-if="wedding.hashtag" class="opening-cover__hashtag">
-              {{ wedding.hashtag }}
-            </p>
           </div>
 
-        </div>
-
+        <div class="opening-cover__footer">
+          <p v-if="wedding.hashtag" class="opening-cover__hashtag">
+            {{ wedding.hashtag }}
+          </p>
         <button
           class="opening-cover__button"
           type="button"
@@ -79,6 +80,7 @@ function openInvitation(): void {
         >
           <span>{{ isOpening ? 'Membuka…' : 'Buka' }}</span>
         </button>
+        </div>
       </div>
     </div>
   </section>
@@ -179,10 +181,12 @@ function openInvitation(): void {
 .opening-cover__names {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  transform: translate(-2cqw, -5cqw);
   margin: 0;
   color: #bf2f5b;
   font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
-  font-size: 17cqw;
+  font-size: 18cqw;
   font-weight: 400;
   line-height: 0.72;
 }
@@ -195,7 +199,11 @@ function openInvitation(): void {
 }
 
 .opening-cover__details {
-  margin-top: 8cqw;
+  position: absolute;
+  z-index: 3;
+  top: 65%;
+  width: 100%;
+  margin: 0;
   font-family: var(--font-display);
   font-size: 3.6cqw;
   letter-spacing: 0.08em;
@@ -210,22 +218,28 @@ function openInvitation(): void {
 
 .opening-cover__details time { margin-top: 0.3rem; }
 
+.opening-cover__footer {
+  position: absolute;
+  z-index: 3;
+  top: 89%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5cqw;
+}
+
 .opening-cover__hashtag {
-  width: min(100%, 17rem);
-  margin-top: 3cqw !important;
-  padding-top: 2.5cqw;
-  border-top: 1px solid rgb(85 81 79 / 70%);
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 2px 6px rgb(0 0 0 / 60%);
   font-size: 3.8cqw;
   letter-spacing: 0;
   text-transform: none;
 }
 
 .opening-cover__button {
-  position: absolute;
-  z-index: 3;
-  top: 90%;
-  left: 50%;
-  translate: -50% 0;
+  position: relative;
   min-width: 7.4rem;
   margin-top: 0;
   padding: 0.78rem 1.85rem;

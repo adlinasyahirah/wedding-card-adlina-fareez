@@ -98,7 +98,6 @@ async function submitMessage(): Promise<void> {
 <template>
   <section
     id="guestbook"
-    v-reveal
     class="guestbook-section"
     aria-labelledby="guestbook-heading"
   >
@@ -109,7 +108,7 @@ async function submitMessage(): Promise<void> {
       aria-hidden="true"
     >
 
-    <div class="guestbook-section__container">
+    <div v-reveal class="guestbook-section__container">
       <header class="guestbook-section__header">
         <p class="guestbook-section__eyebrow">Titipan Ucapan</p>
         <p class="guestbook-section__intro">
@@ -196,7 +195,19 @@ async function submitMessage(): Promise<void> {
   overflow: hidden;
   padding: 5rem var(--space-4);
   color: var(--color-text);
-  background: #f9d7dc;
+  background: transparent;
+}
+
+.guestbook-section::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 5rem;
+  background: linear-gradient(to bottom, transparent, rgb(39 33 25 / 30%) 15%, #b8aa94 100%);
+  content: '';
+  pointer-events: none;
 }
 
 .guestbook-section__floral {
@@ -224,7 +235,7 @@ async function submitMessage(): Promise<void> {
 
 .guestbook-section__eyebrow {
   margin: 0 0 var(--space-3);
-  color: var(--color-primary);
+  color: #fff;
   font-size: 1.81rem;
   font-weight: 600;
   letter-spacing: 0.3em;
@@ -232,6 +243,7 @@ async function submitMessage(): Promise<void> {
 }
 
 .guestbook-section__title {
+  color: #fff;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 5vw, 1.8rem);
@@ -242,7 +254,7 @@ async function submitMessage(): Promise<void> {
 
 .guestbook-section__intro {
   margin: var(--space-4) auto 0;
-  color: var(--color-text-muted);
+  color: #fff;
   line-height: 1.8;
 }
 
@@ -254,7 +266,7 @@ async function submitMessage(): Promise<void> {
 .guestbook-form,
 .guestbook-messages {
   padding: var(--space-8) var(--space-6);
-  border: 1px solid rgb(189 63 112 / 26%);
+  border: 1px solid rgb(117 102 83 / 26%);
   border-radius: 0.35rem;
   background: #fffaf7;
 }
@@ -271,7 +283,7 @@ async function submitMessage(): Promise<void> {
 }
 
 .guestbook-form__field label {
-  color: var(--color-primary);
+  color: #756653;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -282,7 +294,7 @@ async function submitMessage(): Promise<void> {
 .guestbook-form__field textarea {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid rgb(189 63 112 / 35%);
+  border-bottom: 1px solid rgb(117 102 83 / 35%);
   border-radius: 0;
   outline: 0;
   color: var(--color-text);
@@ -302,7 +314,7 @@ async function submitMessage(): Promise<void> {
 
 .guestbook-form__field input:focus,
 .guestbook-form__field textarea:focus {
-  border-color: var(--color-primary);
+  border-color: #756653;
 }
 
 .guestbook-form__count {
@@ -315,10 +327,10 @@ async function submitMessage(): Promise<void> {
   width: fit-content;
   min-height: 2.75rem;
   padding: 0.7rem 1.4rem;
-  border: 1px solid var(--color-primary);
+  border: 1px solid #756653;
   border-radius: 999px;
   color: var(--color-white);
-  background: var(--color-primary);
+  background: #756653;
   cursor: pointer;
   font-size: 0.72rem;
   font-weight: 600;
@@ -332,13 +344,13 @@ async function submitMessage(): Promise<void> {
 }
 
 .guestbook-form__button:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #756653;
   outline-offset: 3px;
 }
 
 .guestbook-form__status {
   margin: 0;
-  color: var(--color-primary);
+  color: #756653;
   font-size: 0.8rem;
 }
 
@@ -350,7 +362,7 @@ async function submitMessage(): Promise<void> {
 
 .guestbook-messages h3 {
   margin: 0 0 var(--space-6);
-  color: var(--color-primary);
+  color: #756653;
   font-family: var(--font-display);
   font-size: 1.6rem;
   font-weight: 400;
@@ -366,7 +378,7 @@ async function submitMessage(): Promise<void> {
 
 .guest-message {
   padding: var(--space-4);
-  border-left: 2px solid var(--color-primary);
+  border-left: 2px solid #756653;
   background: var(--color-cream-50);
 }
 
@@ -387,7 +399,7 @@ async function submitMessage(): Promise<void> {
 }
 
 .guest-message strong {
-  color: var(--color-primary);
+  color: #756653;
 }
 
 .guestbook-messages__empty {

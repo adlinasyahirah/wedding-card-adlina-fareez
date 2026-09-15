@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { wedding } from '../data/wedding'
-import floralRight from '../assets/images/opening-floral-right.webp'
 
 const expandedContact = ref('')
 
@@ -16,14 +15,8 @@ function toggleContact(phone: string): void {
 </script>
 
 <template>
-  <section id="contact" v-reveal class="contact-section" aria-labelledby="contact-heading">
-    <img
-      class="contact-section__watermark"
-      :src="floralRight"
-      alt=""
-      aria-hidden="true"
-    >
-    <div class="contact-section__container">
+  <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+    <div v-reveal class="contact-section__container">
       <header class="contact-section__header">
         <p id="contact-heading" class="contact-section__eyebrow">Hubungi</p>
         <p class="contact-section__intro">
@@ -98,26 +91,30 @@ function toggleContact(phone: string): void {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 3rem var(--space-4) calc(8rem + env(safe-area-inset-bottom));
+  padding: 2rem var(--space-4) calc(6rem + env(safe-area-inset-bottom));
   color: #493940;
-  background: #fad9df;
-}
-
-.contact-section__watermark {
-  position: absolute;
-  z-index: 0;
-  right: -8rem;
-  bottom: -8rem;
-  width: clamp(17rem, 62vw, 31rem);
-  height: auto;
-  pointer-events: none;
+  background: linear-gradient(to bottom, #b8aa94, #d4c7b4);
 }
 
 .contact-section__container {
+  --lace-unit: clamp(0.16px, 0.045vw, 0.25px);
   position: relative;
   z-index: 1;
-  width: min(100%, 64rem);
+  width: min(100%, 54rem);
   margin-inline: auto;
+  padding: clamp(1.75rem, 5vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  border-style: solid;
+  border-color: transparent;
+  border-width:
+    calc(210 * var(--lace-unit))
+    calc(170 * var(--lace-unit))
+    calc(160 * var(--lace-unit))
+    calc(170 * var(--lace-unit));
+  border-image-source: url('../assets/images/lace.png');
+  border-image-slice: 210 170 160 170;
+  border-image-repeat: round;
+  background: #e9e2d9;
+  background-clip: padding-box;
 }
 
 .contact-section__header {
@@ -151,22 +148,17 @@ function toggleContact(phone: string): void {
 
 .contact-section__grid {
   display: grid;
-  width: calc(100% - 2.5rem);
+  width: 100%;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: var(--space-6);
   row-gap: var(--space-2);
   align-items: start;
-  transform: translateX(-1.25rem);
 }
 
 .contact-card {
   min-width: 0;
   border-bottom: 1px solid rgb(182 44 81 / 34%);
   color: #493940;
-}
-
-.contact-card:nth-child(odd) {
-  transform: translateX(1rem);
 }
 
 .contact-card__summary {
@@ -310,8 +302,8 @@ function toggleContact(phone: string): void {
 
 @media (min-width: 48rem) {
   .contact-section {
-    padding-top: 4rem;
-    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+    padding-top: 2rem;
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
   }
 
   .contact-section__grid {

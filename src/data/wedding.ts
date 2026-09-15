@@ -35,16 +35,16 @@ export const wedding: WeddingData = {
       title: "Majlis Akad Nikah",
       date: "21 November 2026",
       dateTime: "2026-11-21T08:00:00+08:00",
-      startTime: "8:00 pagi",
-      endTime: "10:30 pagi",
+      startTime: "8:00 a.m",
+      endTime: "10:30 a.m",
     },
     {
-      title: "Majlis Bersanding",
+      title: "Majlis Resepsi",
       date: "21 November 2026",
       dateTime: "2026-11-21T11:30:00+08:00",
-      startTime: "11:30 pagi",
-      endTime: "3:30 petang",
-      note: "Ketibaan pengantin pada 12:30 tengah hari",
+      startTime: "11:30 a.m",
+      endTime: "3:30 p.m",
+      note: "Ketibaan pengantin pada 12:30 p.m",
     },
   ],
   tentatives: [
@@ -53,11 +53,11 @@ export const wedding: WeddingData = {
       title: "Majlis Akad Nikah",
       items: [
         {
-          time: "8:00 PAGI",
+          time: "8:00 a.m",
           title: "Ketibaan Keluarga & Tetamu",
         },
         {
-          time: "8:30 PAGI – 8:45 PAGI",
+          time: "8:30 a.m – 8:45 a.m",
           title: "Ketibaan Jurunikah, Wali & Saksi",
           details: [
             "Perarakan masuk Jurunikah, Wali & Saksi",
@@ -67,7 +67,7 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "ANGGARAN 9:00 PAGI",
+          time: "9:00 a.m",
           title: "Upacara Akad Nikah",
           details: [
             "Khutbah Nikah",
@@ -78,7 +78,7 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "9:30 PAGI",
+          time: "9:30 a.m",
           title: "Penyempurnaan Akad Nikah",
           details: [
             "Sesi Batal Air Sembahyang",
@@ -87,50 +87,50 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "9:40 PAGI",
+          time: "9:40 a.m",
           title: "Salam Restu",
         },
         {
-          time: "9:45 PAGI",
+          time: "9:45 a.m",
           title: "Sesi Bergambar",
         },
         {
-          time: "10:30 PAGI",
+          time: "10:30 a.m",
           title: "Jamuan Ringkas",
         },
       ],
     },
 
     {
-      id: "bersanding",
-      title: "Majlis Bersanding",
+      id: "resepsi",
+      title: "Majlis Resepsi",
       items: [
         {
-          time: "11:30 PAGI",
+          time: "11:30 a.m",
           title: "Ketibaan Tetamu & Majlis Bermula",
         },
         {
-          time: "12:25 TENGAH HARI",
+          time: "12:25 p.m",
           title: "Ketibaan Pengantin",
         },
         {
-          time: "12:30 TENGAH HARI",
+          time: "12:30 p.m",
           title: "Perarakan Masuk Pengantin",
         },
         {
-          time: "12:35 TENGAH HARI",
+          time: "12:35 p.m",
           title: "Bacaan Doa",
         },
         {
-          time: "12:40 TENGAH HARI",
+          time: "12:40 p.m",
           title: "Salam Restu",
         },
         {
-          time: "12:45 TENGAH HARI",
+          time: "12:45 p.m",
           title: "Makan Beradab",
         },
         {
-          time: "1:00 PETANG",
+          time: "1:00 p.m",
           title: "Sesi Bergambar",
           details: [
             "Keluarga Pengantin Perempuan",
@@ -139,11 +139,11 @@ export const wedding: WeddingData = {
           ],
         },
         {
-          time: "1:30 PETANG",
+          time: "1:30 p.m",
           title: "Menyantuni Tetamu",
         },
         {
-          time: "3:30 PETANG",
+          time: "3:30 p.m",
           title: "Majlis Bersurai",
         },
       ],
@@ -188,6 +188,6 @@ export const wedding: WeddingData = {
       whatsappUrl: "https://wa.me/60184624356",
     },
   ],
-  music: "/music/HONNE - free love (dream edit).mp3",
+  music: "/music/Teman Lelaki & Aziem Rashidi - Satu Bunga.mp3",
   gallery: [],
 };

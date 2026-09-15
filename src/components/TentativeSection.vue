@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { wedding } from '../data/wedding'
 
 const activeTab = ref(
-  wedding.tentatives.find((schedule) => schedule.id === 'bersanding')?.id
+  wedding.tentatives.find((schedule) => schedule.id === 'resepsi')?.id
     ?? wedding.tentatives[0]?.id
     ?? '',
 )
@@ -214,7 +214,7 @@ const activeSchedule = computed(() =>
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.15em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .timeline__title {

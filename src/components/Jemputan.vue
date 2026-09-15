@@ -4,7 +4,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 </script>
 
 <template>
-  <section v-reveal class="couple-section" aria-labelledby="couple-title">
+  <section id="jemputan" v-reveal class="couple-section" aria-labelledby="couple-title">
     <div class="couple-section__glow couple-section__glow--top" aria-hidden="true"></div>
     <div class="couple-section__glow couple-section__glow--bottom" aria-hidden="true"></div>
 
@@ -13,10 +13,6 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
         <span class="couple-section__floral-corner" aria-hidden="true">
           <img :src="floralLeft" alt="">
         </span>
-        <span class="couple-section__corner couple-section__corner--top-left" aria-hidden="true"></span>
-        <span class="couple-section__corner couple-section__corner--top-right" aria-hidden="true"></span>
-        <span class="couple-section__corner couple-section__corner--bottom-left" aria-hidden="true"></span>
-        <span class="couple-section__corner couple-section__corner--bottom-right" aria-hidden="true"></span>
 
         <header class="couple-section__header">
           <p class="couple-section__greeting">
@@ -70,8 +66,8 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 1rem var(--space-4);
-  background: #fad9df;
+  padding: clamp(1rem, 4vw, 2.5rem) var(--space-4) clamp(2rem, 6vw, 4rem);
+  background: linear-gradient(180deg, #b8aa94 0%, #c7b9a3 35%, #d4c7b4 100%);
 }
 
 .couple-section__container {
@@ -82,24 +78,23 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 }
 
 .couple-section__card {
+  --lace-unit: clamp(0.16px, 0.045vw, 0.25px);
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  padding: clamp(3rem, 8vw, 5rem) clamp(1.35rem, 7vw, 5rem);
-  border: 1px solid #b62c51;
-  border-radius: 0.35rem;
-  background: #fad9df;
-  box-shadow: 0 1.5rem 4rem rgb(127 41 77 / 8%);
-}
-
-.couple-section__card::before {
-  position: absolute;
-  inset: clamp(0.55rem, 1.8vw, 0.85rem);
-  border: 3px dotted #b62c51;
-  border-radius: 0.18rem;
-  z-index: 0;
-  background: transparent;
-  content: '';
-  pointer-events: none;
+  padding: clamp(1.75rem, 5vw, 3rem) clamp(0.75rem, 3vw, 2rem);
+  border-style: solid;
+  border-color: transparent;
+  border-width:
+    calc(210 * var(--lace-unit))
+    calc(170 * var(--lace-unit))
+    calc(160 * var(--lace-unit))
+    calc(170 * var(--lace-unit));
+  border-image-source: url('../assets/images/lace.png');
+  border-image-slice: 210 170 160 170;
+  border-image-repeat: round;
+  background: #e9e2d9;
+  background-clip: padding-box;
 }
 
 .couple-section__card > * {
@@ -137,7 +132,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   font-size: clamp(0.88rem, 3.9vw, 1.3rem);
   font-weight: 600;
   letter-spacing: 0.01em;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .couple-section__intro {
@@ -297,7 +292,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   font-size: clamp(0.9rem, 3.9vw, 1.65rem);
   font-weight: 600;
   letter-spacing: 0.04em;
-  white-space: nowrap;
+  white-space: normal;
   text-transform: uppercase;
 }
 
@@ -312,7 +307,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   }
 
   .couple-section__card {
-    padding-inline: 1.15rem;
+    padding-inline: 0.75rem;
   }
 
   .couple-section__greeting {
@@ -383,7 +378,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 
 @media (min-width: 48rem) {
   .couple-section__card {
-    padding-inline: 5rem;
+    padding-inline: 2rem;
   }
 
 }

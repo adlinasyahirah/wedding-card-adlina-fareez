@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { wedding } from '../data/wedding'
-import childhoodPortraits from '../assets/images/Board Welcome Akad Nikah & Sanding 1.png'
-import floralRight from '../assets/images/opening-floral-right.webp'
+import childhoodPortraits from '../assets/images/Books.png'
+import defaultBackground from '../assets/images/background.jpeg'
 
 interface Props {
   backgroundImage?: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  backgroundImage: defaultBackground,
+})
 
 const heroStyle = computed(() =>
   props.backgroundImage
@@ -33,27 +35,21 @@ const weddingDay = computed(() =>
     aria-labelledby="hero-title"
   >
     <div class="hero-section__overlay" aria-hidden="true"></div>
-    <img
-      class="hero-section__floral"
-      :src="floralRight"
-      alt=""
-      aria-hidden="true"
-    >
 
     <div class="hero-section__content">
       <p class="hero-section__eyebrow">{{ wedding.ceremonyTitle }}</p>
-
-      <img
-        class="hero-section__portraits"
-        :src="childhoodPortraits"
-        alt="Gambar zaman kanak-kanak Adlina dan Fareez"
-      >
 
       <h1 id="hero-title" class="hero-section__names">
         <span>{{ wedding.bride.name }}</span>
         <span class="hero-section__ampersand" aria-label="dan">&amp;</span>
         <span>{{ wedding.groom.name }}</span>
       </h1>
+
+      <img
+        class="hero-section__portraits"
+        :src="childhoodPortraits"
+        alt="Buku kenangan dengan gambar zaman kanak-kanak Adlina dan Fareez"
+      >
 
       <div class="hero-section__details">
         <p>{{ weddingDay }}</p>
@@ -86,6 +82,32 @@ const weddingDay = computed(() =>
   color: var(--color-white);
 }
 
+.hero-section--with-image::after {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(7rem, 16vh, 10rem);
+  background: linear-gradient(to bottom, transparent, #b8aa94);
+  content: '';
+  pointer-events: none;
+}
+
+.hero-section--with-image .hero-section__eyebrow {
+  color: var(--color-white);
+}
+
+.hero-section--with-image .hero-section__names,
+.hero-section--with-image .hero-section__details .hero-section__hashtag {
+  color: var(--color-white);
+  text-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}
+
+.hero-section--with-image .hero-section__details .hero-section__hashtag {
+  border-color: rgb(255 255 255 / 50%);
+}
+
 .hero-section__overlay {
   position: absolute;
   z-index: -1;
@@ -103,25 +125,13 @@ const weddingDay = computed(() =>
   opacity: 1;
 }
 
-.hero-section__floral {
-  position: absolute;
-  z-index: 1;
-  top: 4%;
-  right: -2%;
-  width: auto;
-  height: 94%;
-  object-fit: contain;
-  object-position: right center;
-  pointer-events: none;
-}
 
 .hero-section__content {
   position: relative;
   z-index: 2;
   align-self: center;
-  width: min(76%, 42rem);
-  margin-right: auto;
-  margin-left: 2%;
+  width: min(100%, 42rem);
+  margin-inline: auto;
   text-align: center;
 }
 
@@ -138,9 +148,10 @@ const weddingDay = computed(() =>
 
 .hero-section__portraits {
   display: block;
-  width: clamp(20rem, 42vw, 34rem);
+  width: min(100%, 34rem);
   height: auto;
-  margin: clamp(-2.25rem, -3vh, -1rem) auto clamp(0.75rem, 2vh, 1.35rem);
+  margin: 0 auto;
+  transform: translateY(2.5rem) scale(1.2);
   filter: drop-shadow(0 0.75rem 1.1rem rgb(111 27 55 / 10%));
 }
 
@@ -216,12 +227,6 @@ const weddingDay = computed(() =>
     padding: clamp(4.5rem, 10vh, 5.75rem) 1.25rem clamp(7.5rem, 16vh, 9rem);
   }
 
-  .hero-section__content {
-    width: 80%;
-    margin-right: auto;
-    margin-left: 0;
-  }
-
   .hero-section__eyebrow {
     margin-bottom: clamp(1.75rem, 5vh, 2.5rem);
     font-size: clamp(1.15rem, 5.8vw, 1.4rem);
@@ -230,8 +235,7 @@ const weddingDay = computed(() =>
 
   .hero-section__portraits {
     width: min(100%, 21rem);
-    margin-top: -1rem;
-    margin-bottom: 1.25rem;
+    margin-block: 0;
   }
 
   .hero-section__names {
@@ -250,11 +254,6 @@ const weddingDay = computed(() =>
     font-size: 0.88rem;
   }
 
-  .hero-section__floral {
-    top: 8%;
-    right: -18%;
-    height: 88%;
-  }
 }
 
 @media (min-width: 48rem) {

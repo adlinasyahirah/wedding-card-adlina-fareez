@@ -4,13 +4,13 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 interface NavigationItem {
   id: string
   label: string
-  icon: 'calendar' | 'contact' | 'heart' | 'home' | 'theme'
+  icon: 'calendar' | 'contact' | 'heart' | 'home' | 'chess'
 }
 
 const navigationItems: NavigationItem[] = [
   { id: 'hero', label: 'Utama', icon: 'home' },
-  { id: 'event', label: 'Majlis', icon: 'calendar' },
-  { id: 'theme', label: 'Busana', icon: 'theme' },
+  { id: 'jemputan', label: 'Majlis', icon: 'calendar' },
+  { id: 'event', label: 'Aturcara', icon: 'chess' },
   { id: 'guestbook', label: 'Ucapan', icon: 'heart' },
   { id: 'contact', label: 'Hubungi', icon: 'contact' },
 ]
@@ -42,7 +42,6 @@ onMounted(() => {
   )
 
   navigationItems.forEach(({ id }) => {
-    if (id === 'theme') return
     const section = document.getElementById(id)
     if (section) observer?.observe(section)
   })
@@ -58,7 +57,6 @@ onBeforeUnmount(() => {
 
 function openTheme(): void {
   previousSection = activeSection.value
-  activeSection.value = 'theme'
   isThemeOpen.value = true
   document.body.style.overflow = 'hidden'
 }
@@ -69,15 +67,11 @@ function closeTheme(): void {
   document.body.style.overflow = ''
 }
 
-function handleNavigationClick(event: MouseEvent, id: string): void {
-  if (id === 'theme') {
-    event.preventDefault()
-    openTheme()
-    return
-  }
-
+function handleNavigationClick(id: string): void {
   activeSection.value = id
 }
+
+defineExpose({ openTheme })
 </script>
 
 <template>
@@ -92,7 +86,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
       }"
       :href="`#${item.id}`"
       :aria-current="activeSection === item.id ? 'location' : undefined"
-      @click="handleNavigationClick($event, item.id)"
+      @click="handleNavigationClick(item.id)"
     >
       <svg
         v-if="item.icon === 'home'"
@@ -118,15 +112,12 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
         <path d="M20.8 5.7a5.5 5.5 0 0 0-7.8 0L12 6.8l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 22l8.8-8.5a5.5 5.5 0 0 0 0-7.8Z" />
       </svg>
       <svg
-        v-else-if="item.icon === 'theme'"
+        v-else-if="item.icon === 'chess'"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
-        <path d="M12 3a9 9 0 1 0 0 18h1.2a1.8 1.8 0 0 0 0-3.6h-.7a1.5 1.5 0 0 1 0-3h2.1A6.4 6.4 0 0 0 21 8c0-2.8-4-5-9-5Z" />
-        <circle cx="7.5" cy="9" r=".8" />
-        <circle cx="10.5" cy="6.8" r=".8" />
-        <circle cx="14.2" cy="7" r=".8" />
-        <circle cx="17" cy="9.5" r=".8" />
+        <path d="M8 3h2v3h4V3h2v3h3v4l-3 2v5H8v-5l-3-2V6h3V3Z" />
+        <path d="M7 17h10l2 4H5l2-4ZM8 10h8" />
       </svg>
       <svg v-else viewBox="0 0 24 24" aria-hidden="true">
         <path d="M20 11.5a8 8 0 0 1-9 7.9L5 21l1.6-4.6A8 8 0 1 1 20 11.5Z" />
@@ -206,7 +197,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
   min-height: 4.25rem;
   margin-inline: auto;
   padding: 0.4rem;
-  border: 1px solid rgb(189 63 112 / 28%);
+  border: 1px solid rgb(117 102 83 / 28%);
   border-radius: 1.4rem;
   background: rgb(253 251 247 / 92%);
   box-shadow: 0 0.75rem 2.5rem rgb(51 42 33 / 18%);
@@ -224,7 +215,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
   flex-direction: column;
   gap: 0.22rem;
   border-radius: 1rem;
-  color: var(--color-text-muted);
+  color: #756653;
   font-size: clamp(0.5rem, 2.3vw, 0.62rem);
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -242,12 +233,12 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 }
 
 .bottom-navigation__item--active {
-  color: var(--color-gold);
-  background: rgb(235 186 208 / 22%);
+  color: #514331;
+  background: #e9e2d9;
 }
 
 .bottom-navigation__item:focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 2px solid #756653;
   outline-offset: -2px;
 }
 
@@ -270,7 +261,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
   display: grid;
   place-items: center;
   padding: 1.5rem;
-  background: rgb(55 30 39 / 58%);
+  background: rgb(24 21 17 / 70%);
   backdrop-filter: blur(0.55rem);
   -webkit-backdrop-filter: blur(0.55rem);
 }
@@ -278,11 +269,17 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 .theme-modal__card {
   position: relative;
   width: min(100%, 27rem);
+  max-height: 88svh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 40%) transparent;
   padding: 2.5rem 2rem 2.25rem;
-  border: 1px solid rgb(182 44 81 / 32%);
+  border: 1px solid rgb(255 255 255 / 65%);
   border-radius: 1.5rem;
-  color: #493940;
-  background: #fffaf7;
+  color: #fff;
+  background:
+    linear-gradient(rgb(27 22 17 / 60%), rgb(27 22 17 / 76%)),
+    url('../assets/images/background.jpeg') center / cover no-repeat;
   box-shadow: 0 1.5rem 4rem rgb(45 19 28 / 28%);
   text-align: center;
 }
@@ -296,9 +293,9 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
   min-height: 2.5rem;
   place-items: center;
   padding: 0;
-  border: 1px solid #b62c51;
+  border: 1px solid #fff;
   border-radius: 50%;
-  color: #b62c51;
+  color: #fff;
   background: transparent;
   cursor: pointer;
   font-size: 1.55rem;
@@ -312,7 +309,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 
 .theme-modal__eyebrow {
   margin: 0 0 0.35rem;
-  color: #b62c51;
+  color: #fff;
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -321,7 +318,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 
 .theme-modal__header h2 {
   margin: 0;
-  color: #b62c51;
+  color: #fff;
   font-family: var(--font-display);
   font-size: clamp(1.7rem, 7vw, 2.25rem);
   font-weight: 600;
@@ -340,7 +337,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 
 .theme-modal__group p {
   margin: 0;
-  color: #6d5b62;
+  color: #fff;
   line-height: 1.7;
 }
 
@@ -374,7 +371,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
   width: min(100%, 17rem);
   height: 1px;
   margin: 1.6rem auto 0;
-  background: rgb(182 44 81 / 22%);
+  background: rgb(255 255 255 / 45%);
 }
 
 .theme-modal__group--colour {
@@ -396,7 +393,7 @@ function handleNavigationClick(event: MouseEvent, id: string): void {
 }
 
 .theme-modal__group .theme-modal__colour-name {
-  color: #493940;
+  color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
 }

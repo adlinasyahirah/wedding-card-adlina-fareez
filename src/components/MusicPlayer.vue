@@ -94,14 +94,14 @@ defineExpose({ play, pause })
   width: 2.9rem;
   min-height: 2.9rem;
   padding: 0;
-  border: 1px solid rgb(189 63 112 / 40%);
+  border: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   border-radius: 50%;
   color: var(--color-gold);
-  background: rgb(253 251 247 / 90%);
-  box-shadow: 0 0.5rem 1.5rem rgb(51 42 33 / 16%);
+  background: transparent;
+  box-shadow: none;
   cursor: pointer;
-  backdrop-filter: blur(0.75rem);
-  -webkit-backdrop-filter: blur(0.75rem);
   place-items: center;
 }
 
@@ -130,9 +130,10 @@ defineExpose({ play, pause })
   animation-play-state: running;
 }
 
+.music-player__button:focus,
 .music-player__button:focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
+  outline: none;
+  box-shadow: none;
 }
 
 .music-player__error {
