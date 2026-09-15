@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import musicIcon from '../assets/images/music icon.png'
 
 interface Props {
   src: string
@@ -68,7 +69,7 @@ defineExpose({ play, pause })
       @click="togglePlayback"
     >
       <span class="music-player__disc" aria-hidden="true">
-        <span></span>
+        <img :src="musicIcon" alt="" draggable="false">
       </span>
     </button>
 
@@ -107,33 +108,26 @@ defineExpose({ play, pause })
 .music-player__disc {
   position: relative;
   display: grid;
-  width: 1.65rem;
-  height: 1.65rem;
-  border: 1px solid currentColor;
+  width: 2.9rem;
+  height: 2.9rem;
+  overflow: hidden;
   border-radius: 50%;
   place-items: center;
+  animation: music-spin 4s linear infinite;
+  animation-play-state: paused;
 }
 
-.music-player__disc::before,
-.music-player__disc::after {
+.music-player__disc img {
   position: absolute;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  content: '';
-  opacity: 0.45;
-}
-
-.music-player__disc::before {
-  inset: 0.28rem;
-}
-
-.music-player__disc::after {
-  inset: 0.55rem;
-  background: currentColor;
+  width: 125%;
+  max-width: none;
+  height: 125%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 .music-player__button--playing .music-player__disc {
-  animation: music-spin 4s linear infinite;
+  animation-play-state: running;
 }
 
 .music-player__button:focus-visible {

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import { wedding } from '../data/wedding'
 import openingFloralLeft from '../assets/images/opening-floral-left.webp'
 import openingFloralRight from '../assets/images/opening-floral-right.webp'
+import openingRound from '../assets/images/round.png'
 
 const emit = defineEmits<{
   openInvitation: []
@@ -44,20 +45,30 @@ function openInvitation(): void {
       >
 
       <div class="opening-cover__content">
+        <img
+          class="opening-cover__round"
+          :src="openingRound"
+          alt=""
+          aria-hidden="true"
+        >
+
         <p class="opening-cover__eyebrow">{{ wedding.ceremonyTitle }}</p>
 
-        <h1 id="opening-title" class="opening-cover__names">
-          <span>{{ wedding.bride.name }}</span>
-          <span class="opening-cover__ampersand" aria-hidden="true">&amp;</span>
-          <span>{{ wedding.groom.name }}</span>
-        </h1>
+        <div class="opening-cover__center">
+          <h1 id="opening-title" class="opening-cover__names">
+            <span>{{ wedding.bride.name }}</span>
+            <span class="opening-cover__ampersand" aria-hidden="true">&amp;</span>
+            <span>{{ wedding.groom.name }}</span>
+          </h1>
 
-        <div class="opening-cover__details">
-          <p>{{ weddingDay }}</p>
-          <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-          <p v-if="wedding.hashtag" class="opening-cover__hashtag">
-            {{ wedding.hashtag }}
-          </p>
+          <div class="opening-cover__details">
+            <p>{{ weddingDay }}</p>
+            <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
+            <p v-if="wedding.hashtag" class="opening-cover__hashtag">
+              {{ wedding.hashtag }}
+            </p>
+          </div>
+
         </div>
 
         <button
@@ -92,7 +103,18 @@ function openInvitation(): void {
   min-height: 100svh;
   overflow: hidden;
   color: #55514f;
-  background: #f9d7dc;
+  background: #f9d7dc url('../assets/images/background.jpeg') center / cover no-repeat;
+}
+
+.opening-cover__round {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
 }
 
 .opening-cover__botanical {
@@ -120,23 +142,34 @@ function openInvitation(): void {
 
 .opening-cover__content {
   position: relative;
-  z-index: 3;
-  display: flex;
-  width: min(64%, 38rem);
-  min-height: 100vh;
-  min-height: 100svh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(3rem, 8vh, 5rem) 0.75rem;
+  container-type: inline-size;
+  width: min(100%, 70.94svh);
+  aspect-ratio: 1240 / 1748;
+  align-self: center;
   margin-inline: auto;
   text-align: center;
 }
 
+.opening-cover__center {
+  position: absolute;
+  z-index: 3;
+  inset: 23% 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .opening-cover__eyebrow {
-  margin: 0 0 clamp(2.5rem, 7vh, 4.25rem);
+  position: absolute;
+  z-index: 3;
+  top: 5%;
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 2px 8px rgb(0 0 0 / 35%);
   font-family: var(--font-display);
-  font-size: calc(clamp(0.82rem, 3.3vw, 1.05rem) + 2px);
+  font-size: clamp(0.7rem, 3.8cqw, 1.2rem);
   letter-spacing: 0.1em;
   line-height: 1.55;
   white-space: nowrap;
@@ -149,22 +182,22 @@ function openInvitation(): void {
   margin: 0;
   color: #bf2f5b;
   font-family: 'Snell Roundhand', 'Brush Script MT', 'Segoe Script', cursive;
-  font-size: clamp(3.45rem, 17vw, 6.4rem);
+  font-size: 17cqw;
   font-weight: 400;
   line-height: 0.72;
 }
 
 .opening-cover__ampersand {
-  margin-block: 1.15rem;
+  margin-block: 4cqw;
   font-family: var(--font-display);
   font-size: 0.38em;
   line-height: 1;
 }
 
 .opening-cover__details {
-  margin-top: clamp(3.2rem, 9vh, 5rem);
+  margin-top: 8cqw;
   font-family: var(--font-display);
-  font-size: calc(clamp(0.7rem, 2.8vw, 0.88rem) + 2px);
+  font-size: 3.6cqw;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -179,18 +212,22 @@ function openInvitation(): void {
 
 .opening-cover__hashtag {
   width: min(100%, 17rem);
-  margin-top: 0.85rem !important;
-  padding-top: 0.75rem;
+  margin-top: 3cqw !important;
+  padding-top: 2.5cqw;
   border-top: 1px solid rgb(85 81 79 / 70%);
-  font-size: calc(0.82rem + 2px);
+  font-size: 3.8cqw;
   letter-spacing: 0;
   text-transform: none;
 }
 
 .opening-cover__button {
-  position: relative;
+  position: absolute;
+  z-index: 3;
+  top: 90%;
+  left: 50%;
+  translate: -50% 0;
   min-width: 7.4rem;
-  margin-top: clamp(1.4rem, 4vh, 2rem);
+  margin-top: 0;
   padding: 0.78rem 1.85rem;
   overflow: hidden;
   border: 1px solid #bf2f5b;
@@ -214,37 +251,11 @@ function openInvitation(): void {
 .opening-cover.is-opening .opening-cover__content { transform: translateY(-1rem); opacity: 0; }
 
 @media (max-width: 26.5625rem) {
-  .opening-cover__content {
-    width: 76%;
-    padding-inline: 0.35rem;
-  }
-
-  .opening-cover__eyebrow {
-    font-size: clamp(0.78rem, 4vw, 0.98rem);
-    letter-spacing: 0.075em;
-  }
-
-  .opening-cover__names {
-    font-size: clamp(3.35rem, 18vw, 4.8rem);
-  }
-
-  .opening-cover__details {
-    font-size: clamp(0.78rem, 3.7vw, 0.94rem);
-  }
-
-  .opening-cover__hashtag {
-    font-size: clamp(0.82rem, 4vw, 0.98rem);
-  }
-
   .opening-cover__button {
     min-width: 6.8rem;
     padding: 0.7rem 1.55rem;
     font-size: 0.84rem;
   }
-}
-
-@media (min-width: 48rem) {
-  .opening-cover__content { width: min(62%, 48rem); }
 }
 
 </style>
