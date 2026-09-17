@@ -41,20 +41,6 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
             <p>dengan pilihan hatinya</p>
             <h3>{{ wedding.groom.fullName }}</h3>
           </div>
-
-          <div class="couple-section__event">
-            <p class="couple-section__date">
-              <span>Sabtu</span>
-              <time :datetime="wedding.dateTime">{{ wedding.date }}</time>
-            </p>
-            <p class="couple-section__hijri">{{ wedding.hijriDate }}</p>
-          </div>
-
-          <address class="couple-section__venue">
-            <span class="couple-section__venue-label">Lokasi Majlis</span>
-            <strong>{{ wedding.venue.name }}</strong>
-            <span>{{ wedding.venue.address }}</span>
-          </address>
         </div>
       </div>
     </div>
@@ -173,8 +159,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 
 .couple-section__hosts p,
 .couple-section__copy,
-.couple-section__couple p,
-.couple-section__event p {
+.couple-section__couple p {
   margin: 0;
 }
 
@@ -199,7 +184,6 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   display: grid;
   gap: var(--space-4);
   padding-block: clamp(1.5rem, 5vw, 2.25rem);
-  border-block: 1px solid rgb(189 63 112 / 18%);
 }
 
 .couple-section__couple h2,
@@ -224,8 +208,7 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
 }
 
 .couple-section__couple p,
-.couple-section__on,
-.couple-section__hijri {
+.couple-section__on {
   color: #493940;
   font-style: italic;
 }
@@ -234,71 +217,13 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
   font-size: 0.84em;
 }
 
-.couple-section__on,
-.couple-section__hijri {
+.couple-section__on {
   font-size: 0.85rem;
-}
-
-.couple-section__event {
-  display: grid;
-  gap: 0.3rem;
 }
 
 .couple-section__on {
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.couple-section__date {
-  display: grid;
-  gap: 0.15rem;
-  width: min(100%, 32rem);
-  margin-inline: auto !important;
-  color: #493940;
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 4vw, 1.25rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.couple-section__date time {
-  display: block;
-}
-
-.couple-section__venue {
-  display: grid;
-  gap: 0.35rem;
-  max-width: 34rem;
-  padding: clamp(1.25rem, 4vw, 1.75rem);
-  border: 1px solid rgb(189 63 112 / 20%);
-  border-radius: 0.35rem;
-  margin-inline: auto;
-  background: rgb(251 244 238 / 62%);
-  font-style: normal;
-  line-height: 1.7;
-}
-
-.couple-section__venue-label {
-  color: #493940;
-  font-size: 0.84rem;
-  font-style: normal;
-  letter-spacing: 0.12em;
-}
-
-.couple-section__venue strong {
-  color: #493940;
-  font-family: var(--font-display);
-  font-size: clamp(0.9rem, 3.9vw, 1.65rem);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  white-space: normal;
-  text-transform: uppercase;
-}
-
-.couple-section__venue > span:last-child {
-  color: #493940;
-  font-size: 0.84rem;
 }
 
 @media (max-width: 22.5rem) {
@@ -339,38 +264,14 @@ import floralLeft from '../assets/images/opening-floral-left.webp'
     line-height: 1.35;
   }
 
-  .couple-section__couple p,
-  .couple-section__hijri {
+  .couple-section__couple p {
     font-size: 0.72rem;
-  }
-
-  .couple-section__date {
-    font-size: 0.88rem;
-    letter-spacing: 0.07em;
-  }
-
-  .couple-section__venue {
-    padding: 1rem;
-    font-size: 0.74rem;
-  }
-
-  .couple-section__venue-label,
-  .couple-section__venue > span:last-child {
-    font-size: 0.72rem;
-  }
-
-  .couple-section__venue strong {
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    white-space: normal;
   }
 
   .couple-section__header,
   .couple-section__hosts,
   .couple-section__copy,
-  .couple-section__couple,
-  .couple-section__event,
-  .couple-section__venue {
+  .couple-section__couple{
     max-width: 100%;
     overflow-wrap: anywhere;
   }
